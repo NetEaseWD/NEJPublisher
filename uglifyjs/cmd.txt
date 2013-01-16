@@ -1,0 +1,19 @@
+1.命令行模式参数说明(使用命令行模式,请将目录切换到uglifyjs/bin/下)
+最后一个参数
+	obf_mode=0模式下,表示要打包的目录
+	obf_mode=1,obf_mode=2模式下,表示配置文件路径
+-o或--output
+             输出文件路径
+-m或--mode
+            打包模式(0:目录打包模式;1:分组打包模式;2:分组打包模式(输出代码))
+	默认值:0
+-l或--level
+	混淆级别(0:只压缩;1:压缩并混淆'_'开头的标识符(不含'__','_$','_$$');2:压缩并混淆'_' '__'开头的标识符(不含'_$','_$$');3:压缩并混淆所有'_'开头的标识符)
+	默认值:3
+-lm或--line-mode
+	是否单行模式(0:单行;1:一个文件一行)
+	默认值:0
+例如:
+  node uglifyjs -m 0 -o D:/workspace/publisher/trunk/uglifyjs/test/gen/ D:/workspace/publisher/trunk/uglifyjs/test/js/
+  node uglifyjs -m 1 -lm 1 -o D:/workspace/publisher/trunk/uglifyjs/test/gen/  D:/workspace/publisher/trunk/uglifyjs/test/config.js
+  node uglifyjs -m 2 D:/workspace/publisher/trunk/uglifyjs/test/config.js

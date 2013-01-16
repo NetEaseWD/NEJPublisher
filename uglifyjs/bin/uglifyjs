@@ -1,0 +1,92 @@
+#! /usr/bin/env node
+// -*- js -*-
+
+global.sys = require(/^v0\.[012]/.test(process.version) ? "sys" : "util");
+var fs = require("fs"),
+ 	path = require("path"),
+    uglify = require("../uglify"), // symlink ~/.node_libraries/uglify-js.js to ../uglify-js.js
+    jsp = uglify.parser,
+    pro = uglify.uglify;
+
+var options = {
+		obf_mode:0,//(0:目录打包模式,1:分组打包模式,2:分组打包模式(输出代码))
+        obf_level: 3,//(0:只压缩,1:压缩并混淆'_'开头的标识符(不含'__','_$','_$$'),2:压缩并混淆'_' '__'开头的标识符(不含'_$','_$$'),3:压缩并混淆所有'_'开头的标识符)
+        obf_line_mode:0,//(0:单行,1:一个文件一行)
+        codegen_options:{
+        	ascii_only: false,
+            beautify: false,
+            indent_level: 4,
+            indent_start: 0,
+            quote_keys: false,
+            space_colon: false,
+            inline_script: false
+        }
+};
+
+var args = jsp.slice(process.argv, 2);
+var filename;
+
+out: while (args.length > 0) {
+        var v = args.shift();
+        switch (v) {
+        	case "-l":
+            case "--level":
+                options.obf_level = parseInt(args.shift());
+                break;
+            case "-lm":
+            case "--line-mode":
+                options.obf_line_mode = parseInt(args.shift());
+                break;
+            case "-b":
+            case "--beautify":
+                options.codegen_options.beautify = true;
+                break;
+            case "-i":
+            case "--indent":
+                options.codegen_options.indent_level = args.shift();
+                break;
+            case "-q":
+            case "--quote-keys":
+                options.codegen_options.quote_keys = true;
+                break;
+            case "-m":
+            case "--mode":
+                options.obf_mode = parseInt(args.shift());
+                break;
+            case "-o":
+            case "--output":
+                options.out_dir = args.shift();
+                break;
+            case "--ascii":
+                options.codegen_options.ascii_only = true;
+                break;
+            case "--inline-script":
+                options.codegen_options.inline_script = true;
+                break;
+            default:
+                filename = v;
+                break out;
+        }
+}
+if(options.obf_mode===1){//generate by group
+	var group_config = JSON.parse(fs.readFileSync(filename||"Makefile.uglify.js").toString());
+	options.code_map = group_config.map;
+	generate_by_group(group_config.group,options);
+}else if(options.obf_mode===2){//generate by group output code
+	var group_config = JSON.parse(fs.readFileSync(filename||"Makefile.uglify.js").toString());
+	options.code_map = group_config.map;
+	var result = generate_by_group_outcode(group_config.group,options);
+	console.log(result);
+}else{//generate by dir
+	generate_by_dir(filename,options);
+}        
+
+function generate_by_group_outcode(group,options){
+	return uglify.generate_by_group_outcode(group,options);
+}        
+function generate_by_group(group,options){
+	return uglify.generate_by_group(group,options);
+}
+function generate_by_dir(dir_path,options){
+	return uglify.generate_by_dir(dir_path,options);
+}

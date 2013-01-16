@@ -1,0 +1,1 @@
+var be={_read:bw,_aaa:1};be.a=bd["_read"];be["_write"]=bd["_write"];x.push(be.a);
