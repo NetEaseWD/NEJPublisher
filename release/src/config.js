@@ -1,10 +1,38 @@
-﻿var __config = {},
+﻿var __config,
     _fs      = require('./file.js'),
     _log     = require('./logger.js'),
     _util    = require('./util.js'),
     _path    = require('./path.js'),
      path    = require('path'),
      util    = require('util');
+/*
+ * 生成随即文件名
+ * @return {String} 随机文件名
+ */
+var __getRandName = (function(){
+    var _fmtnmb = function(_number){
+        _number = parseInt(_number)||0;
+        return (_number<10?'0':'')+_number;
+    };
+    var _fmtxms = function(_time){
+        var _len = Math.max(0,3-(''+_time).length)+1;
+        return new Array(_len).join('0')+_time;
+    };
+    var _getFileTime = function(){
+        var _time = new Date();
+        return util.format('%s%s%s.%s%s%s%s',
+                           _time.getFullYear(),
+                           _fmtnmb(_time.getMonth()+1),
+                           _fmtnmb(_time.getDate()),
+                           _fmtnmb(_time.getHours()),
+                           _fmtnmb(_time.getMinutes()),
+                           _fmtnmb(_time.getSeconds()),
+                           _fmtxms(_time.getMilliseconds()));
+    };
+    return function(){
+        return _getFileTime();
+    };
+})();
 /*
  * 设置配置信息
  * @param  {String} _key   配置标识
@@ -192,9 +220,7 @@ var __doCheckConfig_DIR = function(){
         _log.error('DIR_MANIFEST[%s] is not in webroot and ignore this config!',_value);
         __setConfig('DIR_MANIFEST','');
     }
-    var _value = __getConfig('DIR_CONFIG')+'_t_m_p_/';
-    __setConfig('DIR_TEMPORARY',_value);
-    _fs.mkdir(_value);
+    _fs.mkdir(__getConfig('DIR_TEMPORARY'));
 };
 /*
  * 检查输出文件配置
@@ -210,6 +236,7 @@ var __doCheckConfig_EXT = function(){
     // X_NOPARSE_FLAG
     // X_NOCORE_STYLE
     // X_NOCORE_SCRIPT
+    // X_NOT_CLEAR_TEMP
     var _suffix = __getConfig('NAME_SUFFIX');
     if (!!_suffix&&!/^[._]/i.test(_suffix))
         __setConfig('NAME_SUFFIX','_'+_suffix);
@@ -225,6 +252,7 @@ var __doCheckConfig_EXT = function(){
     __doCheckNumberWithDefault('X_NOPARSE_FLAG',0);
     __doCheckBoolean('X_NOCORE_STYLE');
     __doCheckBoolean('X_NOCORE_SCRIPT');
+    __doCheckBoolean('X_NOT_CLEAR_TEMP');
 };
 /*
  * 检查域名配置
@@ -280,9 +308,16 @@ var __doCheckConfig_CORE = function(){
  * @return {Void}
  */
 var __doParseConfig = function(_file){
-    _file = _path.path(_file);
-    _log.info('parse %s',_file);
     try{
+        __config = {};
+        _file = _path.path(_file);
+        var _dir = path.dirname(_file)+'/';
+        __setConfig('DIR_CONFIG',_dir);
+        var _name = __getRandName();
+        __setConfig('DIR_LOGGER',_dir+_name+'.txt');
+        __setConfig('DIR_TEMPORARY',_dir+_name+'/');
+        _log.init(__getConfig('DIR_LOGGER'));
+        _log.info('parse %s',_file);
         var _list = _fs.read(_file);
         if (!!_list&&_list.length>0){
             for(var i=0,l=_list.length,_line;i<l;i++){
@@ -295,8 +330,6 @@ var __doParseConfig = function(_file){
                           ,_line.join('=').trim());
             }
         }
-        __setConfig('DIR_CONFIG',
-                     path.dirname(_file)+'/');
         __doCheckConfig_DIR();
         __doCheckConfig_EXT();
         __doCheckConfig_DM();

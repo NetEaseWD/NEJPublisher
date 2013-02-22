@@ -79,6 +79,7 @@ var __doDownloadFile = (function(){
     var _reg = /^https:\/\//i;
     return function(_remote,_local,_callback){
         _log.info('downloading %s',_remote);
+        var _arr = [];
         var _result = url.parse(_remote);
         // add rand version
         var _path = _result.path||'';
@@ -90,15 +91,16 @@ var __doDownloadFile = (function(){
             if (_response.statusCode!=200){
                 _log.error('js file not exist -> %s',_remote);
                 _stream.end();
-                setTimeout(function(){_callback(_remote,_local)},150);
+                setTimeout(function(){_callback(_remote,_local,'')},150);
                 return;
             }
             _response.addListener('data',function(_chunk){
+                _arr.push(_chunk);
                 _stream.write(_chunk);
             });
             _response.addListener('end',function(){
                 _stream.end();
-                setTimeout(function(){_callback(_remote,_local)},150);
+                setTimeout(function(){_callback(_remote,_local,_arr.join(''))},150);
             });
         });
     };
