@@ -100,9 +100,11 @@ var _doVersionResource = function(_file){
     // - no STATIC_VERSION config
     // - resource has version in path
     // - resource is not exist
+    // - resource is dir
     if (!_config.get('STATIC_VERSION')||
          _file.indexOf('?')>=0||
-        !_path.exist(_file))
+        !_path.exist(_file)||
+         _fs.isdir(_file))
         return _file;
     return _file+'?'+_doVersionFile(_fs.content(_file));
 };
@@ -736,9 +738,9 @@ var __doParseJSFile = function(_alias,_file,_result){
  */
 var __doParseJSContent = (function(){
     var f,
-        _reg1 = /^\s*define\(/,
+        _reg1 = /^\s*(NEJ\.)?define\(/,
         _reg2 = /;$/i;
-    var define = function(_uri,_deps,_callback){
+    var _doDefine = function(_uri,_deps,_callback){
         // define('',[],f);
         // define('',f);
         // define([],f);
@@ -756,9 +758,10 @@ var __doParseJSContent = (function(){
             _deps = null;
             _uri = '';
         }
-        return {deps:_deps
-               ,code:util.format('(%s)();'
-               ,(_callback||'').toString())};
+        return {
+            deps:_deps,
+            code:util.format('(%s)();',(_callback||'').toString())
+        };
     };
     return function(_alias,_list,_result){
         _list = _list||[];
@@ -777,10 +780,20 @@ var __doParseJSContent = (function(){
             _source.push(_line);
         }
         var _map = {code:_source.join('\n')};
-        if (_find)
-            _map = eval(_map.code)||{};
+        if (_find){
+            try{
+                var define = _doDefine,
+                    NEJ = {define:_doDefine},
+                    _umap = eval(_map.code);
+                _map = _umap||_map;
+            }catch(e){
+                // ignore if define is 3rd lib api
+                _log.warn('3rd lib with define -> %s',_alias);
+            }
+        }
         _result.data[_alias] = _map.code||'';
         _result.deps[_alias] = _map.deps||[];
+        _log.debug('dependency result: %s -> %j',_alias,_map.deps);
         __doParseJSList(_result.deps[_alias],_result);
     };
 })();
@@ -974,7 +987,7 @@ var __doDownloadExternalCS = function(_list,_result){
             _map[_file] = !0;
             _fs.download(_file,util
                .format('%s%s.css',_tmp,++_map.seed)
-               ,function(_file,_local){
+               ,function(_file,_local,_content){
                        _map[_file] = _local;
                        __doDownloadCheck(_result);
                });
@@ -992,12 +1005,17 @@ var __doDownloadExternalJS = function(_file,_result){
         _tmp = _config.get('DIR_TEMPORARY');
     if (!!_map[_file]) return;
     _map[_file] = !0;
-    _fs.download(_file,util
-       .format('%s%s.js',_tmp,++_map.seed)
-       ,function(_file,_local){
+    var _xloc = util.format('%s%s.js',_tmp,++_map.seed);
+    _log.debug('map %s -> %s.js',_file,_map.seed);
+    _fs.download(_file,_xloc,
+       function(_file,_local,_content){
+             // error if file has been downloaded
+             if (!!_map[_file]&&_map[_file]!=!0){
+                 _log.error('download conflict %s : %s,%s',_file,_map[_file],_local);
+             }
              _map[_file] = _local;
-            __doParseJSFile(
-             _file,_local,_result);
+            //__doParseJSFile(_file,_local,_result);
+            __doParseJSContent(_file,_content.split('\n'),_result);
             __doDownloadCheck(_result);
        });
 };
@@ -1560,10 +1578,9 @@ var __doOutput = function(_result){
     __doMergeVersion(_result);
     __doOutputHtml(_result);
     __doOutputManifest(_result);
-    _fs.rmdir(_config.get('DIR_TEMPORARY'));
-    var _file = _config.get('DIR_CONFIG')+'log.txt';
-    _log.dump(_file);
-    _log.info('release done! view release log %s',_file);
+    if (!_config.get('X_NOT_CLEAR_TEMP'))
+        _fs.rmdir(_config.get('DIR_TEMPORARY'));
+    _log.info('release done! view release log %s',_config.get('DIR_LOGGER'));
 };
 // export api
 exports.html     = __doListHtmlFile;

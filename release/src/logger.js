@@ -1,5 +1,7 @@
 var __logs = [],
+    __file = '',
     _fs    = require('./file.js'),
+     fs    = require('fs'),
      util  = require('util');
 /*
  * 取时间信息
@@ -23,6 +25,15 @@ var __getTimeString = (function(){
     };
 })();
 /**
+ * 设置日志文件
+ * @param  {String} 文件路径
+ * @return {Void}
+ */
+var __doSetFile = function(_file){
+    __logs = [];
+    __file = _file
+};
+/**
  * 记录日志
  * @return {Void}
  */
@@ -33,6 +44,12 @@ var __doLog = function(){
                 _type,__getTimeString(),_args[0]);
     console.log.apply(console,_args);
     __logs.push(util.format.apply(util,_args));
+    try{
+        fs.appendFileSync(__file,__logs.join('\n')+'\n');
+        __logs = [];
+    }catch(e){
+        // ignore error
+    }
 };
 /**
  * 信息日志
@@ -66,8 +83,9 @@ var __doLogError = function(){
  * @return {Void}
  */
 var __doLogDebug = function(){
-    console.log.apply(console,arguments);
-    __logs.push(util.format.apply(util,arguments));
+    var _args = [].slice.call(arguments,0);
+    _args.unshift('DBUG');
+    __doLog.apply(null,_args);
 };
 /**
  * 日志写入文件
@@ -75,9 +93,15 @@ var __doLogDebug = function(){
  * @return {Void}
  */
 var __doLog2File = function(_file){
-    _fs.write(_file,__logs.join('\n'));
+    try{
+        if (!_file) return;
+        _fs.write(_file,__logs.join('\n'));
+    }catch(e){
+        // ignore
+    }
 };
 // export api
+exports.init  = __doSetFile;
 exports.log   = __doLogInfo;
 exports.info  = __doLogInfo;
 exports.warn  = __doLogWarn;
