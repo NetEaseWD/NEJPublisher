@@ -788,6 +788,7 @@ var __doParseJSContent = (function(){
                 _map = _umap||_map;
             }catch(e){
                 // ignore if define is 3rd lib api
+                _log.debug(e);
                 _log.warn('3rd lib with define -> %s',_alias);
             }
         }
