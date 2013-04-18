@@ -194,6 +194,10 @@ var __doParseHtml = (function(){
                     _result.ijs = !0;
                 continue;
             }
+            // ignore test content
+            if (_tag.name=='IGNORE'){
+                continue;
+            }
             // do nothing
             if (_tag.name=='NOPARSE'){
                 (_tag.brr||_source).push(_line);
@@ -345,6 +349,7 @@ var __doParseHtmlTAGStart = function(_tag,_last,_result){
         case 'NOPARSE':
         case 'MODULE':
         case 'DEFINE':
+        case 'IGNORE':
             if (!!_last.name){
                 _log.warn('start tag[%s] before end tag[%s],ignore start tag!',_tag.name,_last.name);
             }else{
@@ -400,6 +405,10 @@ var __doParseHtmlTAGEnd = function(_tag,_last,_result){
             }
         break;
         case 'NOPARSE':
+        case 'IGNORE':
+            if (_last.name!=_tag.name){
+                _log.warn('error nested end tag['+_tag.name+'],ignore end tag!');
+            }
             delete _last.name;
             delete _last.param;
         break;
@@ -584,7 +593,7 @@ var __doParseHtmlModule = function(_result){
     // check define flag
 	if (_xcode.indexOf('#<PG_JS>')>=0){
 		_result.source = _xcode.replace('<!--TP_HTML-->','')
-		                       .replace('#<PG_JS>','#<PG_JS>#<TP_MDL>');
+		                       .replace('#<PG_JS>','#<TP_MDL>#<PG_JS>');
 	}else{
 		// revert to template 
     	var _list = _result.tp_html||[];
