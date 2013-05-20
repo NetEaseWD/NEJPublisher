@@ -679,7 +679,10 @@ var __doListHtmlFile = function(_dir,_result){
                 if (!!_reg&&!_reg.test(_file))
                     continue;
                 _data = __doParseHtml(_file,_result.conf);
-                if (!!_data) _result.files[_file] = _data;
+                if (!!_data){
+                    _result.files[_file] = _data;
+                    _log.debug('%s -> %j',_file,_data.pg_js||_data.tp_js)
+                } 
             }
         }
     }catch(e){
