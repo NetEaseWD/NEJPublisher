@@ -236,6 +236,7 @@ var __doCheckConfig_EXT = function(){
     // X_NOPARSE_FLAG
     // X_NOCORE_STYLE
     // X_NOCORE_SCRIPT
+    // X_RELEASE_MODE
     // X_NOT_CLEAR_TEMP
     var _suffix = __getConfig('NAME_SUFFIX');
     if (!!_suffix&&!/^[._]/i.test(_suffix))
@@ -253,6 +254,7 @@ var __doCheckConfig_EXT = function(){
     __doCheckBoolean('X_NOCORE_STYLE');
     __doCheckBoolean('X_NOCORE_SCRIPT');
     __doCheckBoolean('X_NOT_CLEAR_TEMP');
+    __doCheckValueWithDefault('X_RELEASE_MODE','online');
 };
 /*
  * 检查域名配置

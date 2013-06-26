@@ -159,7 +159,8 @@ var __doParseHtml = (function(){
         _root = path.dirname(_file)+'/';
         _log.info('parse %s',_file);
         var _list = _fs.read(_file,
-            _config.get('FILE_CHARSET'));
+            _config.get('FILE_CHARSET')),
+            _rmode = _config.get('X_RELEASE_MODE');
         if (!_list||!_list.length){
             _log.warn('empty file %s',_file);
             return null;
@@ -195,7 +196,10 @@ var __doParseHtml = (function(){
                 continue;
             }
             // ignore test content
-            if (_tag.name=='IGNORE'){
+            var _param = _tag.param||{},
+                _mode = _param.mode||'online';
+            if (_tag.name=='IGNORE'&&
+                _mode.indexOf(_rmode)>=0){
                 continue;
             }
             // do nothing
