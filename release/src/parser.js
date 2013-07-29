@@ -19,7 +19,8 @@ var _doMerge = function(_text){
     // ${abc} -> x/y/z or {xyz}
     return (_text||'').replace(_reg,
            function($1,$2){
-               return _map[($2||'').trim()]||$1;
+               var _value = _map[($2||'').trim()];
+               return _value==null?$1:_value;
            });
 };
 /*
