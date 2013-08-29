@@ -1483,6 +1483,39 @@ var __doMergeVersion = function(_result){
     }
 };
 /*
+ * 调整链接地址
+ * @param  {Object} 结果集
+ * @return {Void}
+ */
+var __doMergeExlink = (function(){
+    var _reg0 = /(\s+(?:src|href)\s*=\s*['"])(.*?)(['"])/gi;
+    var _doParsePath = function(_path,_file){
+        if (!_path||_path.indexOf('#')==0) return;
+        var _source = _config.get('DIR_SOURCE'),
+            _output = _config.get('DIR_OUTPUT'),
+            _webrot = _config.get('DIR_WEBROOT'),
+            _abpath = _doAbsolutePath(_path,path.dirname(_file)+'/');
+        if (_abpath.indexOf(_source)<0) return;
+        var _result = _abpath.replace(_source,_output).replace(_webrot,'/');
+        _log.debug('adjust outlink %s -> %s',_path,_result);
+        return _result;
+    };
+    return function(_result){
+        if (!_config.get('X_AUTO_EXLINK_PATH')) return;
+        var _files = _result.files,_file;
+        for(var x in _files){
+            _file = _files[x];
+            _file.source = (_file.source||'').replace(
+                _reg0,function($1,$2,$3,$4){
+                    var _new = _doParsePath($3,x);
+                    if (!_new) return $1;
+                    return util.format('%s%s%s',$2,_new,$4);
+                }
+            );
+        }
+    };
+})();
+/*
  * 输出样式
  * @param  {String} _name   类型,css/js
  * @param  {Object} _result 解析结果集
@@ -1599,6 +1632,7 @@ var __doOutput = function(_result){
     __doMergeCSandJS(_result);
     __doMergeTemplate(_result);
     __doMergeVersion(_result);
+    __doMergeExlink(_result);
     __doOutputHtml(_result);
     __doOutputManifest(_result);
     if (!_config.get('X_NOT_CLEAR_TEMP'))

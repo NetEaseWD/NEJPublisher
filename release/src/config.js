@@ -238,6 +238,7 @@ var __doCheckConfig_EXT = function(){
     // X_NOCORE_SCRIPT
     // X_RELEASE_MODE
     // X_NOT_CLEAR_TEMP
+    // X_AUTO_EXLINK_PATH
     var _suffix = __getConfig('NAME_SUFFIX');
     if (!!_suffix&&!/^[._]/i.test(_suffix))
         __setConfig('NAME_SUFFIX','_'+_suffix);
@@ -254,6 +255,7 @@ var __doCheckConfig_EXT = function(){
     __doCheckBoolean('X_NOCORE_STYLE');
     __doCheckBoolean('X_NOCORE_SCRIPT');
     __doCheckBoolean('X_NOT_CLEAR_TEMP');
+    __doCheckBoolean('X_AUTO_EXLINK_PATH');
     __doCheckValueWithDefault('X_RELEASE_MODE','online');
 };
 /*

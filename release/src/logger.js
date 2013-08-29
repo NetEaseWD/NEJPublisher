@@ -31,7 +31,7 @@ var __getTimeString = (function(){
  */
 var __doSetFile = function(_file){
     __logs = [];
-    __file = _file
+    __file = _file;
 };
 /**
  * 记录日志
