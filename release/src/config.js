@@ -239,6 +239,7 @@ var __doCheckConfig_EXT = function(){
     // X_RELEASE_MODE
     // X_NOT_CLEAR_TEMP
     // X_AUTO_EXLINK_PATH
+    // X_AUTO_EXLINK_PREFIX
     var _suffix = __getConfig('NAME_SUFFIX');
     if (!!_suffix&&!/^[._]/i.test(_suffix))
         __setConfig('NAME_SUFFIX','_'+_suffix);
@@ -257,6 +258,11 @@ var __doCheckConfig_EXT = function(){
     __doCheckBoolean('X_NOT_CLEAR_TEMP');
     __doCheckBoolean('X_AUTO_EXLINK_PATH');
     __doCheckValueWithDefault('X_RELEASE_MODE','online');
+    var _prefix = __getConfig('X_AUTO_EXLINK_PREFIX');
+    if (!!_prefix){
+        var _reg = '(\\s+(?:'+_prefix+')\\s*=\\s*[\'"])(.*?)([\'"])';
+        __setConfig('X_AUTO_EXLINK_REG',new RegExp(_reg,'gi'));
+    }
 };
 /*
  * 检查域名配置

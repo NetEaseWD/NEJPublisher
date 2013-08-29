@@ -1502,11 +1502,20 @@ var __doMergeExlink = (function(){
     };
     return function(_result){
         if (!_config.get('X_AUTO_EXLINK_PATH')) return;
-        var _files = _result.files,_file;
+        var _files = _result.files,_file,
+            _regud = _config.get('X_AUTO_EXLINK_REG');
         for(var x in _files){
             _file = _files[x];
             _file.source = (_file.source||'').replace(
                 _reg0,function($1,$2,$3,$4){
+                    var _new = _doParsePath($3,x);
+                    if (!_new) return $1;
+                    return util.format('%s%s%s',$2,_new,$4);
+                }
+            );
+            if (!_regud) continue;
+            _file.source = (_file.source||'').replace(
+                _regud,function($1,$2,$3,$4){
                     var _new = _doParsePath($3,x);
                     if (!_new) return $1;
                     return util.format('%s%s%s',$2,_new,$4);
