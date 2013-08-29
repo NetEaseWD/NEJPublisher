@@ -133,7 +133,10 @@ var _doEachResult = (function(){
  */
 var __doParseHtml = (function(){
         // tag line
+        // ignore ie conditional comment
     var _reg0  = /^\s*<!--\s*(.+?)\s*-->\s*$/,
+        _reg00 = /<!\s*\[/,    // for <![endif]--> or <!-- <![endif]-->
+        _reg01 = /<!--\s*\[/,  // for <!--[if lte IE 7]> or <!--[if !IE]> -->
         // stylesheet
         _reg10 = /<link[\w\W]*?rel\s*=\s*["']stylesheet["']/i,
         _reg11 = /<link[\w\W]*?href\s*=\s*["'](.*?)["']/i,
@@ -180,7 +183,9 @@ var __doParseHtml = (function(){
         for(var i=0,l=_list.length,_line,_tmp,_txg;i<l;i++){
             _line = _list[i];
             // tag line
-            if (_reg0.test(_line)){
+            if (_reg0.test(_line)&&
+               !_reg00.test(_line)&&
+               !_reg01.test(_line)){
                 _txg = __doParseHtmlTAG(
                          RegExp.$1,_tag,_source);
                 // save tag param
@@ -686,7 +691,7 @@ var __doListHtmlFile = function(_dir,_result){
                 _data = __doParseHtml(_file,_result.conf);
                 if (!!_data){
                     _result.files[_file] = _data;
-                    _log.debug('%s -> %j',_file,_data.pg_js||_data.tp_js)
+                    _log.debug('%s -> %j',_file,_data.pg_js||_data.tp_js);
                 } 
             }
         }
