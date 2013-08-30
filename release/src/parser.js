@@ -601,16 +601,20 @@ var __doParseHtmlModule = function(_result){
         _xcode = _result.source;
     if (!_xlist||!_xlist.length) return;
     // check define flag
+    var _wrap = _config.get('X_MODULE_WRAPPER');
 	if (_xcode.indexOf('#<PG_JS>')>=0){
+	    var _module = util.format(_wrap,'#<TP_MDL>');
 		_result.source = _xcode.replace('<!--TP_HTML-->','')
-		                       .replace('#<PG_JS>','#<TP_MDL>#<PG_JS>');
+		                       .replace('#<PG_JS>',_module+'#<PG_JS>');
 	}else{
 		// revert to template 
     	var _list = _result.tp_html||[];
     	_list.push.apply(_list,_xlist);
     	_result.tp_html = _list;
     	delete _result.tp_mdl;
-    	_result.source = _xcode.replace('<!--TP_HTML-->','#<TP_HTML>');
+    	_result.source = _xcode.replace(
+    	    '<!--TP_HTML-->',util.format(_wrap,'#<TP_HTML>')
+    	);
 	}
 };
 /*

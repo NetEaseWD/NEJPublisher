@@ -240,6 +240,7 @@ var __doCheckConfig_EXT = function(){
     // X_NOT_CLEAR_TEMP
     // X_AUTO_EXLINK_PATH
     // X_AUTO_EXLINK_PREFIX
+    // X_MODULE_WRAPPER
     var _suffix = __getConfig('NAME_SUFFIX');
     if (!!_suffix&&!/^[._]/i.test(_suffix))
         __setConfig('NAME_SUFFIX','_'+_suffix);
@@ -257,6 +258,7 @@ var __doCheckConfig_EXT = function(){
     __doCheckBoolean('X_NOCORE_SCRIPT');
     __doCheckBoolean('X_NOT_CLEAR_TEMP');
     __doCheckBoolean('X_AUTO_EXLINK_PATH');
+    __doCheckValueWithDefault('X_MODULE_WRAPPER','%s');
     __doCheckValueWithDefault('X_RELEASE_MODE','online');
     var _prefix = __getConfig('X_AUTO_EXLINK_PREFIX');
     if (!!_prefix){
