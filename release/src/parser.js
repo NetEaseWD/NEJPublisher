@@ -1363,10 +1363,8 @@ var __doMergeCSandJS = (function(){
  * @return {Void}
  */
 var __doMergeTemplate = (function(){
-    var _reg0 = /#<TP_HTML>/gi,
-        _reg1 = /#<(js|cs|[\d]*?):(.*?)>/gi,
+    var _reg1 = /#<(js|cs|[\d]*?):(.*?)>/gi,
         _reg2 = /<meta.*?>/i,
-        _reg3 = /#<TP_MDL>/gi,
         _tmpl = '<div style="display:none;" id="umi://%s">%s</div>';
     var _doMergeHTML = function(_file,_data,_test){
         var _fobj = _data[_file];
@@ -1391,8 +1389,10 @@ var __doMergeTemplate = (function(){
             _fobj.tp_html = _arr.join('');
         }
         // merge template
-        var _source = _fobj.source;
-        _source = _source.replace(_reg0,_fobj.tp_html);
+        // don't use replace
+        var _source = _fobj.source
+                .split('#<TP_HTML>')
+                .join(_fobj.tp_html);
         _fobj.source = _source;
         return _source;
     };
@@ -1408,7 +1408,7 @@ var __doMergeTemplate = (function(){
     			      _src.replace(_input,''),
     			      _data[_src].source);
     	}
-    	_fobj.source = _fobj.source.replace(_reg3,_list.join(''));
+    	_fobj.source = _fobj.source.split('#<TP_MDL>').join(_list.join(''));
     };
     var _doFixSource = function(_result){
         var _files = _result.files,
