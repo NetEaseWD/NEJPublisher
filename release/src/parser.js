@@ -1296,15 +1296,18 @@ var __doExlineFile = (function(){
  * @return {String}          样式连接
  */
 var __doInlineFile = (function(){
-    var _reg0 = /<\/(script|textarea)>/gi,
-        _tmap = {cs:['<style type="text/css">%s</style>'
-                    ,'<textarea name="css">%s</textarea>']
-                ,js:['<script type="text/javascript">%s</script>'
-                    ,'<textarea name="js">%s</textarea>']};
+    var _regc = [/<\/(script)>/gi,/<\/(textarea)>/gi],
+        _tmap = {
+            cs:['<style type="text/css">%s</style>',
+                '<textarea name="css">%s</textarea>'],
+            js:['<script type="text/javascript">%s</script>',
+                '<textarea name="js">%s</textarea>']
+        };
     return function(_content,_conf){
-        return util.format(
-              _tmap[_conf.type][_conf.mode],
-              _content.replace(_reg0,'<&#47;$1>'));
+        if (_conf.type=='js'){
+            _content = _content.replace(_regc[_conf.mode],'<&#47;$1>');
+        }
+        return util.format(_tmap[_conf.type][_conf.mode],_content);
     };
 })();
 /*
