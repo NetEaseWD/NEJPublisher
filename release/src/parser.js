@@ -681,7 +681,8 @@ var __doListHtmlFile = function(_dir,_result){
             if (!_result.files) _result.files = {};
             if (!_result.manifest) _result.manifest = {};
             for(var i=0,l=_list.length,_file,_data,
-                _reg = _config.get('FILE_SUFFIXE');i<l;i++){
+                _reg = _config.get('FILE_SUFFIXE'),
+                _reg1 = _config.get('FILE_FILTER');i<l;i++){
                 _file = _list[i];
                 if (_util.svn(_file))
                     continue;
@@ -690,7 +691,8 @@ var __doListHtmlFile = function(_dir,_result){
                     __doListHtmlFile(_file+'/',_result);
                     continue;
                 }
-                if (!!_reg&&!_reg.test(_file))
+                if ((!!_reg&&!_reg.test(_file))||
+                    (!!_reg1&&!_reg1.test(_file)))
                     continue;
                 _data = __doParseHtml(_file,_result.conf);
                 if (!!_data){

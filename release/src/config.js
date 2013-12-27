@@ -229,6 +229,7 @@ var __doCheckConfig_DIR = function(){
 var __doCheckConfig_EXT = function(){
     // NAME_SUFFIX
     // FILE_SUFFIXE
+    // FILE_FILTER
     // FILE_CHARSET
     // RAND_VERSION
     // STATIC_VERSION
@@ -248,6 +249,10 @@ var __doCheckConfig_EXT = function(){
     if (!!_suffix)
         _suffix = new RegExp('\\.(?:'+_suffix+')$','i');
     __setConfig('FILE_SUFFIXE',_suffix);
+    var _filter = __getConfig('FILE_FILTER');
+    if (!!_filter)
+        _filter = new RegExp(_filter,'i');
+    __setConfig('FILE_FILTER',_suffix);
     var _charset = __getConfig('FILE_CHARSET')||'utf-8';
     __setConfig('FILE_CHARSET',_charset.toLowerCase());
     __doCheckBoolean('RAND_VERSION');
