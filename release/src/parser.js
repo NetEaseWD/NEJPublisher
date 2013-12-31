@@ -164,6 +164,7 @@ var __doParseHtml = (function(){
         _log.info('parse %s',_file);
         var _list = _fs.read(_file,
             _config.get('FILE_CHARSET')),
+            _wrot = _config.get('DIR_SOURCE'),
             _rmode = _config.get('X_RELEASE_MODE');
         if (!_list||!_list.length){
             _log.warn('empty file %s',_file);
@@ -180,7 +181,7 @@ var __doParseHtml = (function(){
             _tag    = {},  // tag info  {name:'',param:{},brr:[],type:'',arr:[]}
             _source = [];  // html code list
         if (_config.get('X_NOCOMPRESS')) _tag.brr = [];
-        for(var i=0,l=_list.length,_line,_tmp,_txg;i<l;i++){
+        for(var i=0,l=_list.length,_line,_tmp,_txg,_rot;i<l;i++){
             _line = _list[i];
             // tag line
             if (_reg0.test(_line)&&
@@ -282,7 +283,12 @@ var __doParseHtml = (function(){
                     _tag.arr.push(_line.trim());
                     if (_tag.name=='MODULE'&&_tag.type=='html')
                         _tag.type = 'mdl';
-                    __doParseHtmlTemplate(_tag,_result,_root);
+                    // external template path must in DIR_SOURCE
+                    _rot = _root;
+                    if (_rot.indexOf(_wrot)<0){
+                        _rot = _wrot;
+                    }
+                    __doParseHtmlTemplate(_tag,_result,_rot);
                     continue;
                 }
             }
