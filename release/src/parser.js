@@ -331,6 +331,12 @@ var __doParseHtmlTAG = (function(){
         return _result;
     };
     return function(_line,_last,_result){
+        // comment line
+        if (_line.indexOf('@')<0){
+        	_log.info('ignore comment line: %s',_line);
+        	return {};
+        }
+        // tag line
         var _tag  = _tag2obj(_line);
         !_tag.end ? __doParseHtmlTAGStart(_tag,_last,_result)
                   : __doParseHtmlTAGEnd(_tag,_last,_result);
