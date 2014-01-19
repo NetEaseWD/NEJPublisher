@@ -42,7 +42,15 @@ function uglify_main(hash_code_orgin,hash_group_config,options){
 			try{
 				code_ast = jsp.parse(hash_code_orgin[key], options.strict_semicolons);
 			}catch(e){
-				console.log('[UGLIFYJS] '+hash_code_orgin[key].split('\n')[e.line-1]);
+			    var s = hash_code_orgin[key].split('\n'),
+			        a = [],
+			        i = Math.max(0,e.line-10),
+			        l = Math.min(e.line+10,s.length);
+			    for(var k;i<l;i++){
+			        k = i+1;
+			        a.push((k==e.line?'->\t':'\t')+k+':\t'+s[i]);
+			    }
+				console.log('[UGLIFYJS] SOURCE CODE AT: \n'+a.join('\n'));
 				console.log('[UGLIFYJS] PARSE ERROR: '+e.message +' AT LINE:'+e.line+' COL:'+e.col);
 			}
 			list_code_ast.push(code_ast);
