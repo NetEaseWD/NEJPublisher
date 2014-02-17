@@ -149,10 +149,14 @@ var __doParseHtml = (function(){
         // template
         _reg30 = /<textarea.*?name\s*=\s*["'](js|css|html)["']/i,
         _reg31 = /<\/textarea>/i;
-    // check has core 
+    // check core param in define tag
     var _hasCore = function(_txg,_name){
-    	return !_txg.end&&_txg.name==_name&&
-    	      !!_txg.param&&!!_txg.param.core;
+        if (!_txg.end&&_txg.name==_name){
+            var _param = _txg.param||{},
+                _core = _param.core;
+            return _core===!0||_core===!1;
+        }
+    	return !1;
     };
     // check core file inline flag
     var _isInline = function(_txg,_name){
@@ -193,11 +197,11 @@ var __doParseHtml = (function(){
                 // <!-- @STYLE {core:true,inline:true} -->
                 // <!-- @DEFINE {core:true,inline:true} -->
                 if (_hasCore(_txg,'STYLE'))
-                    _result.css = !0;
+                    _result.css = _txg.param.core;
                 if (_isInline(_txg,'STYLE'))
                     _result.icss = !0;
                 if (_hasCore(_txg,'DEFINE'))
-                    _result.js = !0;
+                    _result.js = _txg.param.core;
                 if (_isInline(_txg,'DEFINE'))
                     _result.ijs = !0;
                 continue;
@@ -1185,7 +1189,7 @@ var __doPrepareList = (function(){
                 _file = _list[i];
                 _file = (_conf.ffuc||f)(_file,_result)||_file;
                 _list[i] = _file;
-                if (_iscf) continue;
+                if (_iscf||_fobj[_type]===!1) continue;
                 // calculate file count
                 if (!_xmap[_file])
                     _xmap[_file] = 0;
@@ -1201,10 +1205,12 @@ var __doPrepareList = (function(){
         _doEachResult(_result.files,function(_fobj,_prefix,_name){
             var _list = _fobj[_prefix+_type];
             if (!_list||!_list.length) return;
-            for(var i=_list.length-1;i>=0;i--){
-                if (!!_fmap[_list[i]]){
-                    _fobj[_type] = !0;
-                    _list.splice(i,1);
+            if (_fobj[_type]!==!1){
+                for(var i=_list.length-1;i>=0;i--){
+                    if (!!_fmap[_list[i]]){
+                        _fobj[_type] = !0;
+                        _list.splice(i,1);
+                    }
                 }
             }
             _output[_prefix+_name] = _list;

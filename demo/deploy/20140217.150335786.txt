@@ -1,0 +1,387 @@
+[INFO] 2014-02-17 15:03:35.787	-	parse D:/workspace/git/NEJPublisher/demo/deploy/release.conf
+[INFO] 2014-02-17 15:03:35.793	-	config -> {"DIR_CONFIG":"D:/workspace/git/NEJPublisher/demo/deploy/","DIR_LOGGER":"D:/workspace/git/NEJPublisher/demo/deploy/20140217.150335786.txt","DIR_TEMPORARY":"D:/workspace/git/NEJPublisher/demo/deploy/20140217.150335786/","DIR_WEBROOT":"D:/workspace/git/NEJPublisher/demo/web-app/","DIR_SOURCE":"D:/workspace/git/NEJPublisher/demo/web-app/src/html/","DIR_OUTPUT":"D:/workspace/git/NEJPublisher/demo/web-app/pub/","DIR_OUTPUT_STATIC":"D:/workspace/git/NEJPublisher/demo/web-app/r/","DIR_STATIC":"D:/workspace/git/NEJPublisher/demo/web-app/image/","NEJ_DIR":"http://192.168.146.236:8020/NEJ/src/","STATIC_VERSION":true,"OBF_LEVEL":1,"OBF_MAX_JS_INLINE_SIZE":50,"DIR_SOURCE_TP":"","DIR_OUTPUT_TP":"","ALIAS_DICTIONARY":{},"ALIAS_START_TAG":"${","ALIAS_END_TAG":"}","ALIAS_REG":{},"DIR_MANIFEST":"","FILE_SUFFIXE":"","FILE_FILTER":"","FILE_CHARSET":"utf-8","RAND_VERSION":false,"X_NOCOMPRESS":false,"X_NOPARSE_FLAG":0,"X_NOCORE_STYLE":false,"X_NOCORE_SCRIPT":false,"X_NOT_CLEAR_TEMP":false,"X_AUTO_EXLINK_PATH":false,"X_MODULE_WRAPPER":"%s","X_RELEASE_MODE":"online","DM_STATIC_CS":"/","DM_STATIC_JS":"/","DM_STATIC_RR":true,"DM_STATIC":"/","DM_STATIC_CS_RR":true,"DM_STATIC_JS_RR":true,"DIR_STATIC_REG":{},"OBF_LINE_MODE":1,"OBF_MAX_CS_INLINE_SIZE":50,"OBF_NAME_BAGS":"D:/workspace/git/NEJPublisher/demo/deploy/names.txt","CORE_LIST_JS":"","CORE_LIST_CS":""}
+[INFO] 2014-02-17 15:03:35.796	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a0.html
+[DBUG] 2014-02-17 15:03:35.802	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a0.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a0.js"]
+[INFO] 2014-02-17 15:03:35.803	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a1.html
+[INFO] 2014-02-17 15:03:35.804	-	ignore comment line: comment line
+[DBUG] 2014-02-17 15:03:35.804	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a1.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a1.js"]
+[INFO] 2014-02-17 15:03:35.805	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a2.html
+[DBUG] 2014-02-17 15:03:35.806	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a2.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a2.js"]
+[INFO] 2014-02-17 15:03:35.807	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.html
+[DBUG] 2014-02-17 15:03:35.807	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.js"]
+[INFO] 2014-02-17 15:03:35.808	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b0.html
+[DBUG] 2014-02-17 15:03:35.809	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b0.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b0.js"]
+[INFO] 2014-02-17 15:03:35.809	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b1.html
+[DBUG] 2014-02-17 15:03:35.810	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b1.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b1.js"]
+[INFO] 2014-02-17 15:03:35.810	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b2.html
+[DBUG] 2014-02-17 15:03:35.811	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b2.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b2.js"]
+[INFO] 2014-02-17 15:03:35.812	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.html
+[DBUG] 2014-02-17 15:03:35.812	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.js"]
+[INFO] 2014-02-17 15:03:35.813	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/c.html
+[DBUG] 2014-02-17 15:03:35.814	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/c.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/c.js"]
+[INFO] 2014-02-17 15:03:35.814	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d0.html
+[DBUG] 2014-02-17 15:03:35.815	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d0.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d0.js"]
+[INFO] 2014-02-17 15:03:35.816	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d1.html
+[DBUG] 2014-02-17 15:03:35.817	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d1.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d1.js"]
+[INFO] 2014-02-17 15:03:35.818	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d2.html
+[DBUG] 2014-02-17 15:03:35.820	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d2.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d2.js"]
+[INFO] 2014-02-17 15:03:35.820	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.html
+[DBUG] 2014-02-17 15:03:35.821	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.js"]
+[INFO] 2014-02-17 15:03:35.821	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/m.html
+[DBUG] 2014-02-17 15:03:35.822	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/m.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/m.js"]
+[INFO] 2014-02-17 15:03:35.823	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/ui.html
+[DBUG] 2014-02-17 15:03:35.823	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/ui.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/ui.js"]
+[INFO] 2014-02-17 15:03:35.824	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/index.html
+[INFO] 2014-02-17 15:03:35.830	-	ignore comment line: comment line
+[DBUG] 2014-02-17 15:03:35.832	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/index.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/page/index.js"]
+[INFO] 2014-02-17 15:03:35.832	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/simple.html
+[DBUG] 2014-02-17 15:03:35.834	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/simple.html -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/page/simple.js"]
+[INFO] 2014-02-17 15:03:35.834	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/test/a.html
+[DBUG] 2014-02-17 15:03:35.835	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/test/a.html -> undefined
+[INFO] 2014-02-17 15:03:35.835	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/html/test/b.html
+[DBUG] 2014-02-17 15:03:35.837	-	D:/workspace/git/NEJPublisher/demo/web-app/src/html/test/b.html -> undefined
+[INFO] 2014-02-17 15:03:35.838	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a0.js
+[DBUG] 2014-02-17 15:03:35.838	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a0.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.839	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/module.js
+[DBUG] 2014-02-17 15:03:35.840	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/module.js -> ["{lib}util/dispatcher/module.2.js"]
+[DBUG] 2014-02-17 15:03:35.840	-	map http://192.168.146.236:8020/NEJ/src/util/dispatcher/module.2.js -> 1392620615838.js
+[INFO] 2014-02-17 15:03:35.841	-	downloading http://192.168.146.236:8020/NEJ/src/util/dispatcher/module.2.js
+[INFO] 2014-02-17 15:03:35.845	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a1.js
+[DBUG] 2014-02-17 15:03:35.845	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a1.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.846	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a2.js
+[DBUG] 2014-02-17 15:03:35.847	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a2.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.848	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.js
+[DBUG] 2014-02-17 15:03:35.848	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.js -> ["{lib}util/tab/tab.js","{pro}module/module.js"]
+[DBUG] 2014-02-17 15:03:35.849	-	map http://192.168.146.236:8020/NEJ/src/util/tab/tab.js -> 1392620615839.js
+[INFO] 2014-02-17 15:03:35.849	-	downloading http://192.168.146.236:8020/NEJ/src/util/tab/tab.js
+[INFO] 2014-02-17 15:03:35.851	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b0.js
+[DBUG] 2014-02-17 15:03:35.851	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b0.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.852	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b1.js
+[DBUG] 2014-02-17 15:03:35.852	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b1.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.853	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b2.js
+[DBUG] 2014-02-17 15:03:35.854	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b2.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.858	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.js
+[DBUG] 2014-02-17 15:03:35.859	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.859	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/c.js
+[DBUG] 2014-02-17 15:03:35.860	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/c.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.860	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d0.js
+[DBUG] 2014-02-17 15:03:35.861	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d0.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.862	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d1.js
+[DBUG] 2014-02-17 15:03:35.862	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d1.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.862	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d2.js
+[DBUG] 2014-02-17 15:03:35.863	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d2.js -> ["{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.863	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.js
+[DBUG] 2014-02-17 15:03:35.864	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.js -> ["{lib}util/tab/tab.js","{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.865	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/m.js
+[DBUG] 2014-02-17 15:03:35.865	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/m.js -> ["{lib}util/tab/tab.js","{pro}module/module.js"]
+[INFO] 2014-02-17 15:03:35.866	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/ui.js
+[DBUG] 2014-02-17 15:03:35.868	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/ui.js -> ["{lib}ui/base.js"]
+[DBUG] 2014-02-17 15:03:35.868	-	map http://192.168.146.236:8020/NEJ/src/ui/base.js -> 1392620615840.js
+[INFO] 2014-02-17 15:03:35.869	-	downloading http://192.168.146.236:8020/NEJ/src/ui/base.js
+[INFO] 2014-02-17 15:03:35.870	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/page/index.js
+[DBUG] 2014-02-17 15:03:35.871	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/page/index.js -> ["{lib}util/template/tpl.js","{lib}util/dispatcher/dispatcher.2.js"]
+[DBUG] 2014-02-17 15:03:35.871	-	map http://192.168.146.236:8020/NEJ/src/util/template/tpl.js -> 1392620615841.js
+[INFO] 2014-02-17 15:03:35.872	-	downloading http://192.168.146.236:8020/NEJ/src/util/template/tpl.js
+[DBUG] 2014-02-17 15:03:35.872	-	map http://192.168.146.236:8020/NEJ/src/util/dispatcher/dispatcher.2.js -> 1392620615842.js
+[INFO] 2014-02-17 15:03:35.872	-	downloading http://192.168.146.236:8020/NEJ/src/util/dispatcher/dispatcher.2.js
+[INFO] 2014-02-17 15:03:35.873	-	parse D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/page/simple.js
+[DBUG] 2014-02-17 15:03:35.873	-	dependency result: D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/page/simple.js -> ["{lib}util/template/tpl.js"]
+[DBUG] 2014-02-17 15:03:36.39	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/dispatcher/module.2.js -> ["{lib}util/event.js"]
+[DBUG] 2014-02-17 15:03:36.43	-	map http://192.168.146.236:8020/NEJ/src/util/event.js -> 1392620615843.js
+[INFO] 2014-02-17 15:03:36.52	-	downloading http://192.168.146.236:8020/NEJ/src/util/event.js
+[DBUG] 2014-02-17 15:03:36.56	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/tab/tab.js -> ["{lib}base/event.js","{lib}base/element.js","{lib}util/event.js"]
+[DBUG] 2014-02-17 15:03:36.59	-	map http://192.168.146.236:8020/NEJ/src/base/event.js -> 1392620615844.js
+[INFO] 2014-02-17 15:03:36.60	-	downloading http://192.168.146.236:8020/NEJ/src/base/event.js
+[DBUG] 2014-02-17 15:03:36.63	-	map http://192.168.146.236:8020/NEJ/src/base/element.js -> 1392620615845.js
+[INFO] 2014-02-17 15:03:36.64	-	downloading http://192.168.146.236:8020/NEJ/src/base/element.js
+[DBUG] 2014-02-17 15:03:36.70	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/template/tpl.js -> ["{lib}util/template/jst.js","{lib}util/event/event.js","{lib}util/ajax/tag.js","{lib}util/ajax/xdr.js"]
+[DBUG] 2014-02-17 15:03:36.72	-	map http://192.168.146.236:8020/NEJ/src/util/template/jst.js -> 1392620615846.js
+[INFO] 2014-02-17 15:03:36.74	-	downloading http://192.168.146.236:8020/NEJ/src/util/template/jst.js
+[DBUG] 2014-02-17 15:03:36.76	-	map http://192.168.146.236:8020/NEJ/src/util/event/event.js -> 1392620615847.js
+[INFO] 2014-02-17 15:03:36.78	-	downloading http://192.168.146.236:8020/NEJ/src/util/event/event.js
+[DBUG] 2014-02-17 15:03:36.80	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/tag.js -> 1392620615848.js
+[INFO] 2014-02-17 15:03:36.82	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/tag.js
+[DBUG] 2014-02-17 15:03:36.84	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/xdr.js -> 1392620615849.js
+[INFO] 2014-02-17 15:03:36.86	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/xdr.js
+[DBUG] 2014-02-17 15:03:36.89	-	dependency result: http://192.168.146.236:8020/NEJ/src/ui/base.js -> ["{lib}base/element.js","{lib}util/event.js","{lib}util/template/tpl.js"]
+[DBUG] 2014-02-17 15:03:36.102	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/dispatcher/dispatcher.2.js -> ["{lib}util/dispatcher/dsp/group.single.js","{lib}util/history/history.js","{lib}util/template/tpl.js"]
+[DBUG] 2014-02-17 15:03:36.106	-	map http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/group.single.js -> 1392620615850.js
+[INFO] 2014-02-17 15:03:36.107	-	downloading http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/group.single.js
+[DBUG] 2014-02-17 15:03:36.108	-	map http://192.168.146.236:8020/NEJ/src/util/history/history.js -> 1392620615851.js
+[INFO] 2014-02-17 15:03:36.109	-	downloading http://192.168.146.236:8020/NEJ/src/util/history/history.js
+[DBUG] 2014-02-17 15:03:36.281	-	dependency result: http://192.168.146.236:8020/NEJ/src/base/event.js -> ["{lib}base/element.js","{lib}base/util.js","{patch}api.js"]
+[DBUG] 2014-02-17 15:03:36.284	-	map http://192.168.146.236:8020/NEJ/src/base/util.js -> 1392620615852.js
+[INFO] 2014-02-17 15:03:36.286	-	downloading http://192.168.146.236:8020/NEJ/src/base/util.js
+[DBUG] 2014-02-17 15:03:36.289	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-0/api.js -> 1392620615853.js
+[INFO] 2014-02-17 15:03:36.291	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-0/api.js
+[DBUG] 2014-02-17 15:03:36.293	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-1/api.js -> 1392620615854.js
+[INFO] 2014-02-17 15:03:36.295	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-1/api.js
+[DBUG] 2014-02-17 15:03:36.301	-	map http://192.168.146.236:8020/NEJ/src/patched/trident/api.js -> 1392620615855.js
+[INFO] 2014-02-17 15:03:36.303	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident/api.js
+[DBUG] 2014-02-17 15:03:36.305	-	map http://192.168.146.236:8020/NEJ/src/patched/gecko/api.js -> 1392620615856.js
+[INFO] 2014-02-17 15:03:36.308	-	downloading http://192.168.146.236:8020/NEJ/src/patched/gecko/api.js
+[DBUG] 2014-02-17 15:03:36.310	-	map http://192.168.146.236:8020/NEJ/src/patched/webkit/api.js -> 1392620615857.js
+[INFO] 2014-02-17 15:03:36.312	-	downloading http://192.168.146.236:8020/NEJ/src/patched/webkit/api.js
+[DBUG] 2014-02-17 15:03:36.315	-	map http://192.168.146.236:8020/NEJ/src/patched/presto/api.js -> 1392620615858.js
+[INFO] 2014-02-17 15:03:36.317	-	downloading http://192.168.146.236:8020/NEJ/src/patched/presto/api.js
+[DBUG] 2014-02-17 15:03:36.321	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/event.js -> ["{lib}base/event.js","{lib}base/util.js"]
+[DBUG] 2014-02-17 15:03:36.329	-	dependency result: http://192.168.146.236:8020/NEJ/src/base/element.js -> ["{lib}base/constant.js","{lib}base/event.js","{lib}base/util.js","{patch}api.js","{patch}json.js"]
+[DBUG] 2014-02-17 15:03:36.332	-	map http://192.168.146.236:8020/NEJ/src/base/constant.js -> 1392620615859.js
+[INFO] 2014-02-17 15:03:36.334	-	downloading http://192.168.146.236:8020/NEJ/src/base/constant.js
+[DBUG] 2014-02-17 15:03:36.336	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-0/json.js -> 1392620615860.js
+[INFO] 2014-02-17 15:03:36.338	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-0/json.js
+[DBUG] 2014-02-17 15:03:36.340	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-1/json.js -> 1392620615861.js
+[INFO] 2014-02-17 15:03:36.341	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-1/json.js
+[DBUG] 2014-02-17 15:03:36.343	-	map http://192.168.146.236:8020/NEJ/src/patched/trident/json.js -> 1392620615862.js
+[INFO] 2014-02-17 15:03:36.344	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident/json.js
+[DBUG] 2014-02-17 15:03:36.345	-	map http://192.168.146.236:8020/NEJ/src/patched/gecko/json.js -> 1392620615863.js
+[INFO] 2014-02-17 15:03:36.346	-	downloading http://192.168.146.236:8020/NEJ/src/patched/gecko/json.js
+[DBUG] 2014-02-17 15:03:36.347	-	map http://192.168.146.236:8020/NEJ/src/patched/webkit/json.js -> 1392620615864.js
+[INFO] 2014-02-17 15:03:36.349	-	downloading http://192.168.146.236:8020/NEJ/src/patched/webkit/json.js
+[DBUG] 2014-02-17 15:03:36.350	-	map http://192.168.146.236:8020/NEJ/src/patched/presto/json.js -> 1392620615865.js
+[INFO] 2014-02-17 15:03:36.352	-	downloading http://192.168.146.236:8020/NEJ/src/patched/presto/json.js
+[DBUG] 2014-02-17 15:03:36.353	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/template/jst.js -> ["{lib}base/util.js","{lib}base/element.js","{lib}util/template/trimpath.nej.js"]
+[DBUG] 2014-02-17 15:03:36.355	-	map http://192.168.146.236:8020/NEJ/src/util/template/trimpath.nej.js -> 1392620615866.js
+[INFO] 2014-02-17 15:03:36.356	-	downloading http://192.168.146.236:8020/NEJ/src/util/template/trimpath.nej.js
+[DBUG] 2014-02-17 15:03:36.358	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/tag.js -> ["{lib}util/ajax/loader/html.js","{lib}util/ajax/loader/style.js","{lib}util/ajax/loader/script.js"]
+[DBUG] 2014-02-17 15:03:36.360	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/loader/html.js -> 1392620615867.js
+[INFO] 2014-02-17 15:03:36.361	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/loader/html.js
+[DBUG] 2014-02-17 15:03:36.362	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/loader/style.js -> 1392620615868.js
+[INFO] 2014-02-17 15:03:36.364	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/loader/style.js
+[DBUG] 2014-02-17 15:03:36.365	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/loader/script.js -> 1392620615869.js
+[INFO] 2014-02-17 15:03:36.366	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/loader/script.js
+[DBUG] 2014-02-17 15:03:36.369	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/event/event.js -> ["{lib}base/util.js","{lib}base/event.js","{lib}base/element.js","{lib}util/event.js"]
+[DBUG] 2014-02-17 15:03:36.370	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/xdr.js -> ["{lib}base/constant.js","{lib}base/util.js","{patch}ajax.js"]
+[DBUG] 2014-02-17 15:03:36.372	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-0/ajax.js -> 1392620615870.js
+[INFO] 2014-02-17 15:03:36.373	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-0/ajax.js
+[DBUG] 2014-02-17 15:03:36.375	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-1/ajax.js -> 1392620615871.js
+[INFO] 2014-02-17 15:03:36.375	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-1/ajax.js
+[DBUG] 2014-02-17 15:03:36.376	-	map http://192.168.146.236:8020/NEJ/src/patched/trident/ajax.js -> 1392620615872.js
+[INFO] 2014-02-17 15:03:36.377	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident/ajax.js
+[DBUG] 2014-02-17 15:03:36.378	-	map http://192.168.146.236:8020/NEJ/src/patched/gecko/ajax.js -> 1392620615873.js
+[INFO] 2014-02-17 15:03:36.379	-	downloading http://192.168.146.236:8020/NEJ/src/patched/gecko/ajax.js
+[DBUG] 2014-02-17 15:03:36.380	-	map http://192.168.146.236:8020/NEJ/src/patched/webkit/ajax.js -> 1392620615874.js
+[INFO] 2014-02-17 15:03:36.381	-	downloading http://192.168.146.236:8020/NEJ/src/patched/webkit/ajax.js
+[DBUG] 2014-02-17 15:03:36.382	-	map http://192.168.146.236:8020/NEJ/src/patched/presto/ajax.js -> 1392620615875.js
+[INFO] 2014-02-17 15:03:36.383	-	downloading http://192.168.146.236:8020/NEJ/src/patched/presto/ajax.js
+[DBUG] 2014-02-17 15:03:36.385	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/group.single.js -> ["{lib}util/dispatcher/dsp/group.js"]
+[DBUG] 2014-02-17 15:03:36.386	-	map http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/group.js -> 1392620615876.js
+[INFO] 2014-02-17 15:03:36.387	-	downloading http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/group.js
+[DBUG] 2014-02-17 15:03:36.389	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/history/history.js -> ["{lib}util/event/event.js","{lib}util/timer/animation.js","{patch}api.js"]
+[DBUG] 2014-02-17 15:03:36.390	-	map http://192.168.146.236:8020/NEJ/src/util/timer/animation.js -> 1392620615877.js
+[INFO] 2014-02-17 15:03:36.391	-	downloading http://192.168.146.236:8020/NEJ/src/util/timer/animation.js
+[DBUG] 2014-02-17 15:03:36.556	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-0/api.js -> ["{lib}patched/api.js"]
+[DBUG] 2014-02-17 15:03:36.559	-	map http://192.168.146.236:8020/NEJ/src/patched/api.js -> 1392620615878.js
+[INFO] 2014-02-17 15:03:36.562	-	downloading http://192.168.146.236:8020/NEJ/src/patched/api.js
+[DBUG] 2014-02-17 15:03:36.571	-	dependency result: http://192.168.146.236:8020/NEJ/src/base/util.js -> ["{lib}base/global.js","{lib}base/element.js"]
+[DBUG] 2014-02-17 15:03:36.575	-	map http://192.168.146.236:8020/NEJ/src/base/global.js -> 1392620615879.js
+[INFO] 2014-02-17 15:03:36.577	-	downloading http://192.168.146.236:8020/NEJ/src/base/global.js
+[DBUG] 2014-02-17 15:03:36.585	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident/api.js -> ["{lib}patched/api.js"]
+[DBUG] 2014-02-17 15:03:36.589	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/gecko/api.js -> ["{lib}patched/api.js"]
+[DBUG] 2014-02-17 15:03:36.596	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-1/api.js -> ["{lib}patched/api.js"]
+[DBUG] 2014-02-17 15:03:36.602	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/webkit/api.js -> ["{lib}patched/com/api.js"]
+[DBUG] 2014-02-17 15:03:36.605	-	map http://192.168.146.236:8020/NEJ/src/patched/com/api.js -> 1392620615880.js
+[INFO] 2014-02-17 15:03:36.608	-	downloading http://192.168.146.236:8020/NEJ/src/patched/com/api.js
+[DBUG] 2014-02-17 15:03:36.611	-	dependency result: http://192.168.146.236:8020/NEJ/src/base/constant.js -> ["{lib}base/global.js","{patch}config.js"]
+[DBUG] 2014-02-17 15:03:36.613	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-0/config.js -> 1392620615881.js
+[INFO] 2014-02-17 15:03:36.615	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-0/config.js
+[DBUG] 2014-02-17 15:03:36.617	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-1/config.js -> 1392620615882.js
+[INFO] 2014-02-17 15:03:36.619	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-1/config.js
+[DBUG] 2014-02-17 15:03:36.622	-	map http://192.168.146.236:8020/NEJ/src/patched/trident/config.js -> 1392620615883.js
+[INFO] 2014-02-17 15:03:36.624	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident/config.js
+[DBUG] 2014-02-17 15:03:36.626	-	map http://192.168.146.236:8020/NEJ/src/patched/gecko/config.js -> 1392620615884.js
+[INFO] 2014-02-17 15:03:36.628	-	downloading http://192.168.146.236:8020/NEJ/src/patched/gecko/config.js
+[DBUG] 2014-02-17 15:03:36.630	-	map http://192.168.146.236:8020/NEJ/src/patched/webkit/config.js -> 1392620615885.js
+[INFO] 2014-02-17 15:03:36.632	-	downloading http://192.168.146.236:8020/NEJ/src/patched/webkit/config.js
+[DBUG] 2014-02-17 15:03:36.635	-	map http://192.168.146.236:8020/NEJ/src/patched/presto/config.js -> 1392620615886.js
+[INFO] 2014-02-17 15:03:36.637	-	downloading http://192.168.146.236:8020/NEJ/src/patched/presto/config.js
+[DBUG] 2014-02-17 15:03:36.640	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/presto/api.js -> ["{lib}patched/api.js"]
+[DBUG] 2014-02-17 15:03:36.642	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-0/json.js -> ["{lib}util/encode/json.js","{lib}patched/json.js"]
+[DBUG] 2014-02-17 15:03:36.643	-	map http://192.168.146.236:8020/NEJ/src/util/encode/json.js -> 1392620615887.js
+[INFO] 2014-02-17 15:03:36.644	-	downloading http://192.168.146.236:8020/NEJ/src/util/encode/json.js
+[DBUG] 2014-02-17 15:03:36.646	-	map http://192.168.146.236:8020/NEJ/src/patched/json.js -> 1392620615888.js
+[INFO] 2014-02-17 15:03:36.647	-	downloading http://192.168.146.236:8020/NEJ/src/patched/json.js
+[DBUG] 2014-02-17 15:03:36.648	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident/json.js -> ["{lib}util/encode/json.js","{lib}patched/json.js"]
+[DBUG] 2014-02-17 15:03:36.651	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/gecko/json.js -> ["{lib}patched/json.js"]
+[DBUG] 2014-02-17 15:03:36.652	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-1/json.js -> ["{lib}patched/json.js"]
+[DBUG] 2014-02-17 15:03:36.653	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/webkit/json.js -> ["{lib}patched/json.js"]
+[DBUG] 2014-02-17 15:03:36.655	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/template/trimpath.nej.js -> undefined
+[DBUG] 2014-02-17 15:03:36.656	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/presto/json.js -> ["{lib}patched/json.js"]
+[DBUG] 2014-02-17 15:03:36.657	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/loader/html.js -> ["{patch}api.js","{lib}util/ajax/loader/loader.js"]
+[DBUG] 2014-02-17 15:03:36.659	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/loader/loader.js -> 1392620615889.js
+[INFO] 2014-02-17 15:03:36.660	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/loader/loader.js
+[DBUG] 2014-02-17 15:03:36.662	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/loader/style.js -> ["{lib}util/ajax/loader/loader.js"]
+[DBUG] 2014-02-17 15:03:36.663	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-0/ajax.js -> ["{lib}patched/ajax.js"]
+[DBUG] 2014-02-17 15:03:36.664	-	map http://192.168.146.236:8020/NEJ/src/patched/ajax.js -> 1392620615890.js
+[INFO] 2014-02-17 15:03:36.666	-	downloading http://192.168.146.236:8020/NEJ/src/patched/ajax.js
+[DBUG] 2014-02-17 15:03:36.667	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/loader/script.js -> ["{lib}util/ajax/loader/loader.js"]
+[DBUG] 2014-02-17 15:03:36.670	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident/ajax.js -> ["{lib}patched/ajax.js","{lib}util/encode/json.js"]
+[DBUG] 2014-02-17 15:03:36.671	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-1/ajax.js -> ["{lib}patched/ajax.js"]
+[DBUG] 2014-02-17 15:03:36.672	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/webkit/ajax.js -> ["{lib}patched/ajax.js"]
+[DBUG] 2014-02-17 15:03:36.675	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/group.js -> ["{lib}base/constant.js","{lib}util/event.js","{lib}util/template/tpl.js","{lib}util/dispatcher/dsp/util.js"]
+[DBUG] 2014-02-17 15:03:36.677	-	map http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/util.js -> 1392620615891.js
+[INFO] 2014-02-17 15:03:36.678	-	downloading http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/util.js
+[DBUG] 2014-02-17 15:03:36.679	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/presto/ajax.js -> ["{lib}patched/ajax.js"]
+[DBUG] 2014-02-17 15:03:36.680	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/gecko/ajax.js -> ["{lib}patched/ajax.js"]
+[DBUG] 2014-02-17 15:03:36.681	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/timer/animation.js -> ["{lib}base/platform.js"]
+[DBUG] 2014-02-17 15:03:36.682	-	map http://192.168.146.236:8020/NEJ/src/base/platform.js -> 1392620615892.js
+[INFO] 2014-02-17 15:03:36.683	-	downloading http://192.168.146.236:8020/NEJ/src/base/platform.js
+[DBUG] 2014-02-17 15:03:36.844	-	dependency result: http://192.168.146.236:8020/NEJ/src/base/global.js -> null
+[DBUG] 2014-02-17 15:03:36.852	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/api.js -> ["{lib}base/platform.js"]
+[DBUG] 2014-02-17 15:03:36.856	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-0/config.js -> ["{lib}patched/config.js"]
+[DBUG] 2014-02-17 15:03:36.859	-	map http://192.168.146.236:8020/NEJ/src/patched/config.js -> 1392620615893.js
+[INFO] 2014-02-17 15:03:36.862	-	downloading http://192.168.146.236:8020/NEJ/src/patched/config.js
+[DBUG] 2014-02-17 15:03:36.867	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-1/config.js -> ["{lib}patched/config.js"]
+[DBUG] 2014-02-17 15:03:36.871	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/com/api.js -> ["{lib}patched/api.js"]
+[DBUG] 2014-02-17 15:03:36.875	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident/config.js -> ["{lib}patched/config.js"]
+[DBUG] 2014-02-17 15:03:36.878	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/webkit/config.js -> ["{lib}patched/config.js"]
+[DBUG] 2014-02-17 15:03:36.881	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/gecko/config.js -> ["{lib}patched/config.js"]
+[DBUG] 2014-02-17 15:03:36.884	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/presto/config.js -> ["{lib}patched/config.js"]
+[DBUG] 2014-02-17 15:03:36.886	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/json.js -> ["{lib}base/platform.js"]
+[DBUG] 2014-02-17 15:03:36.891	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/loader/loader.js -> ["{lib}base/constant.js","{lib}base/event.js","{lib}util/event.js"]
+[DBUG] 2014-02-17 15:03:36.894	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/encode/json.js -> undefined
+[DBUG] 2014-02-17 15:03:36.897	-	dependency result: http://192.168.146.236:8020/NEJ/src/base/platform.js -> ["{lib}base/global.js"]
+[DBUG] 2014-02-17 15:03:36.899	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/ajax.js -> ["{lib}base/platform.js","{lib}base/constant.js","{lib}util/ajax/proxy/xhr.js","{lib}util/ajax/proxy/flash.js","{lib}util/ajax/proxy/frame.js","{lib}util/ajax/proxy/upload.js"]
+[DBUG] 2014-02-17 15:03:36.903	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/xhr.js -> 1392620615894.js
+[INFO] 2014-02-17 15:03:36.905	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/xhr.js
+[DBUG] 2014-02-17 15:03:36.907	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/flash.js -> 1392620615895.js
+[INFO] 2014-02-17 15:03:36.909	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/flash.js
+[DBUG] 2014-02-17 15:03:36.910	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/frame.js -> 1392620615896.js
+[INFO] 2014-02-17 15:03:36.912	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/frame.js
+[DBUG] 2014-02-17 15:03:36.913	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/upload.js -> 1392620615897.js
+[INFO] 2014-02-17 15:03:36.914	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/upload.js
+[DBUG] 2014-02-17 15:03:36.916	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/util.js -> ["{lib}base/util.js","{lib}util/dispatcher/module.2.js","{lib}util/dispatcher/dsp/node.js"]
+[DBUG] 2014-02-17 15:03:36.919	-	map http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/node.js -> 1392620615898.js
+[INFO] 2014-02-17 15:03:36.920	-	downloading http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/node.js
+[DBUG] 2014-02-17 15:03:37.86	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/xhr.js -> ["{lib}util/ajax/proxy/proxy.js"]
+[DBUG] 2014-02-17 15:03:37.89	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/proxy.js -> 1392620615899.js
+[INFO] 2014-02-17 15:03:37.93	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/proxy.js
+[DBUG] 2014-02-17 15:03:37.98	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/config.js -> ["{lib}base/platform.js"]
+[DBUG] 2014-02-17 15:03:37.103	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/frame.js -> ["{lib}util/ajax/message.js","{lib}util/ajax/proxy/proxy.js"]
+[DBUG] 2014-02-17 15:03:37.107	-	map http://192.168.146.236:8020/NEJ/src/util/ajax/message.js -> 1392620615900.js
+[INFO] 2014-02-17 15:03:37.110	-	downloading http://192.168.146.236:8020/NEJ/src/util/ajax/message.js
+[DBUG] 2014-02-17 15:03:37.116	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/upload.js -> ["{lib}util/ajax/message.js","{lib}util/ajax/proxy/proxy.js"]
+[DBUG] 2014-02-17 15:03:37.121	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/flash.js -> ["{lib}util/flash/flash.js","{lib}util/ajax/proxy/proxy.js"]
+[DBUG] 2014-02-17 15:03:37.124	-	map http://192.168.146.236:8020/NEJ/src/util/flash/flash.js -> 1392620615901.js
+[INFO] 2014-02-17 15:03:37.126	-	downloading http://192.168.146.236:8020/NEJ/src/util/flash/flash.js
+[DBUG] 2014-02-17 15:03:37.129	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/node.js -> ["{lib}util/event.js"]
+[DBUG] 2014-02-17 15:03:37.298	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/proxy.js -> ["{patch}config.js","{lib}base/util.js","{lib}base/event.js","{lib}base/constant.js","{lib}base/element.js","{lib}util/event.js","{lib}util/cache/cookie.js"]
+[DBUG] 2014-02-17 15:03:37.304	-	map http://192.168.146.236:8020/NEJ/src/util/cache/cookie.js -> 1392620615902.js
+[INFO] 2014-02-17 15:03:37.307	-	downloading http://192.168.146.236:8020/NEJ/src/util/cache/cookie.js
+[DBUG] 2014-02-17 15:03:37.311	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/ajax/message.js -> ["{lib}base/element.js","{patch}message.js"]
+[DBUG] 2014-02-17 15:03:37.316	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-0/message.js -> 1392620615903.js
+[INFO] 2014-02-17 15:03:37.319	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-0/message.js
+[DBUG] 2014-02-17 15:03:37.326	-	map http://192.168.146.236:8020/NEJ/src/patched/trident-1/message.js -> 1392620615904.js
+[INFO] 2014-02-17 15:03:37.329	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident-1/message.js
+[DBUG] 2014-02-17 15:03:37.331	-	map http://192.168.146.236:8020/NEJ/src/patched/trident/message.js -> 1392620615905.js
+[INFO] 2014-02-17 15:03:37.333	-	downloading http://192.168.146.236:8020/NEJ/src/patched/trident/message.js
+[DBUG] 2014-02-17 15:03:37.336	-	map http://192.168.146.236:8020/NEJ/src/patched/gecko/message.js -> 1392620615906.js
+[INFO] 2014-02-17 15:03:37.338	-	downloading http://192.168.146.236:8020/NEJ/src/patched/gecko/message.js
+[DBUG] 2014-02-17 15:03:37.340	-	map http://192.168.146.236:8020/NEJ/src/patched/webkit/message.js -> 1392620615907.js
+[INFO] 2014-02-17 15:03:37.342	-	downloading http://192.168.146.236:8020/NEJ/src/patched/webkit/message.js
+[DBUG] 2014-02-17 15:03:37.344	-	map http://192.168.146.236:8020/NEJ/src/patched/presto/message.js -> 1392620615908.js
+[INFO] 2014-02-17 15:03:37.345	-	downloading http://192.168.146.236:8020/NEJ/src/patched/presto/message.js
+[DBUG] 2014-02-17 15:03:37.348	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/flash/flash.js -> ["{lib}util/template/jst.js","{lib}util/timer/animation.js"]
+[DBUG] 2014-02-17 15:03:37.512	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-0/message.js -> ["{lib}patched/message.js"]
+[DBUG] 2014-02-17 15:03:37.515	-	map http://192.168.146.236:8020/NEJ/src/patched/message.js -> 1392620615909.js
+[INFO] 2014-02-17 15:03:37.519	-	downloading http://192.168.146.236:8020/NEJ/src/patched/message.js
+[DBUG] 2014-02-17 15:03:37.523	-	dependency result: http://192.168.146.236:8020/NEJ/src/util/cache/cookie.js -> ["{lib}base/util.js"]
+[DBUG] 2014-02-17 15:03:37.527	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident/message.js -> ["{lib}patched/message.js","{lib}base/util.js","{lib}util/event/event.js","{lib}util/encode/json.js"]
+[DBUG] 2014-02-17 15:03:37.531	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/gecko/message.js -> ["{lib}patched/message.js"]
+[DBUG] 2014-02-17 15:03:37.537	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/trident-1/message.js -> ["{lib}patched/message.js"]
+[DBUG] 2014-02-17 15:03:37.540	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/webkit/message.js -> ["{lib}patched/message.js"]
+[DBUG] 2014-02-17 15:03:37.542	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/presto/message.js -> ["{lib}patched/message.js"]
+[DBUG] 2014-02-17 15:03:37.698	-	dependency result: http://192.168.146.236:8020/NEJ/src/patched/message.js -> ["{lib}base/platform.js"]
+[WARN] 2014-02-17 15:03:37.700	-	css file not exist -> .m-a0{min-height:500px;_height:500px;background:#f00;}
+.m-a0 input{padding:5px 10px;margin:10px 0;}
+[WARN] 2014-02-17 15:03:37.703	-	css file not exist -> .m-a1{min-height:500px;_height:500px;background:#fdc;}
+.m-a1 input{padding:5px 10px;margin:10px 0;}
+[WARN] 2014-02-17 15:03:37.705	-	css file not exist -> .m-a2{min-height:500px;_height:500px;background:#aaa;}
+.m-a2 input{padding:5px 10px;margin:10px 0;}
+[WARN] 2014-02-17 15:03:37.706	-	css file not exist -> .m-a .w-tab2{float:left;width:100px;margin-right:-100px;text-align:center;font-size:14px;}
+.m-a .w-tab2 .itm{display:block;height:30px;line-height:30px;margin-bottom:5px;color:#000;background:#ccc;}
+.m-a .w-tab2 .itm:hover{text-decoration:none;}
+.m-a .w-tab2 .js-selected{background:#888;color:#fff;font-weight:bold;}
+.m-a .w-box2{margin-left:100px;padding-left:10px;border-left:1px solid #888;}
+[WARN] 2014-02-17 15:03:37.709	-	css file not exist -> .m-b0{background:#fd0;}
+[WARN] 2014-02-17 15:03:37.710	-	css file not exist -> .m-b1{background:#ddc;}
+[WARN] 2014-02-17 15:03:37.711	-	css file not exist -> .m-b2{background:#eee;font-size:16px;line-height:20px;}
+[WARN] 2014-02-17 15:03:37.712	-	css file not exist -> .m-b{min-height:500px;_height:500px;background:#f00;}
+.m-b .bx{float:left;width:50%;}
+.m-b .bm{clear:both;}
+[WARN] 2014-02-17 15:03:37.714	-	css file not exist -> .m-c{min-height:500px;_height:500px;background:#000;color:#fff;font-size:14px;}
+[WARN] 2014-02-17 15:03:37.715	-	css file not exist -> .m-d0{min-height:500px;_height:500px;background:#f00;}
+.m-d0 input{padding:5px 10px;margin:10px 0;}
+[WARN] 2014-02-17 15:03:37.717	-	css file not exist -> .m-d1{min-height:500px;_height:500px;background:#fdc;}
+.m-d1 input{padding:5px 10px;margin:10px 0;}
+[WARN] 2014-02-17 15:03:37.718	-	css file not exist -> .m-d2{min-height:500px;_height:500px;background:#aaa;}
+.m-d2 input{padding:5px 10px;margin:10px 0;}
+[WARN] 2014-02-17 15:03:37.720	-	css file not exist -> .m-d .w-tab2{float:left;width:100px;margin-right:-100px;text-align:center;font-size:14px;}
+.m-d .w-tab2 .itm{display:block;height:30px;line-height:30px;margin-bottom:5px;color:#000;background:#ccc;}
+.m-d .w-tab2 .itm:hover{text-decoration:none;}
+.m-d .w-tab2 .js-selected{background:#888;color:#fff;font-weight:bold;}
+.m-d .w-box2{margin-left:100px;padding-left:10px;border-left:1px solid #888;}
+[WARN] 2014-02-17 15:03:37.722	-	css file not exist -> .w-tab{border-bottom:1px solid #000;overflow:hidden;text-align:center;font-size:16px;zoom:1;}
+.w-tab .itm{display:block;float:left;width:100px;height:30px;line-height:30px;margin-right:10px;color:#000;background:#aaa;}
+.w-tab .itm:hover{text-decoration:none;}
+.w-tab .js-selected{background:#000;color:#fff;}
+.w-box{padding:10px 0;}
+[INFO] 2014-02-17 15:03:37.725	-	core css file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/css/common.css"]
+[INFO] 2014-02-17 15:03:37.726	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a0.html css file list -> ["cs-code-1392620615909"]
+[INFO] 2014-02-17 15:03:37.728	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a1.html css file list -> ["cs-code-1392620615910"]
+[INFO] 2014-02-17 15:03:37.729	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a2.html css file list -> ["cs-code-1392620615911"]
+[INFO] 2014-02-17 15:03:37.730	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.html css file list -> ["cs-code-1392620615912"]
+[INFO] 2014-02-17 15:03:37.731	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b0.html css file list -> ["cs-code-1392620615913"]
+[INFO] 2014-02-17 15:03:37.732	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b1.html css file list -> ["cs-code-1392620615914"]
+[INFO] 2014-02-17 15:03:37.733	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b2.html css file list -> ["cs-code-1392620615915"]
+[INFO] 2014-02-17 15:03:37.734	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.html css file list -> ["cs-code-1392620615916"]
+[INFO] 2014-02-17 15:03:37.735	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/c.html css file list -> ["cs-code-1392620615917"]
+[INFO] 2014-02-17 15:03:37.736	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d0.html css file list -> ["cs-code-1392620615918"]
+[INFO] 2014-02-17 15:03:37.737	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d1.html css file list -> ["cs-code-1392620615919"]
+[INFO] 2014-02-17 15:03:37.738	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d2.html css file list -> ["cs-code-1392620615920"]
+[INFO] 2014-02-17 15:03:37.739	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.html css file list -> ["cs-code-1392620615921"]
+[INFO] 2014-02-17 15:03:37.741	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/m.html css file list -> ["cs-code-1392620615922"]
+[INFO] 2014-02-17 15:03:37.742	-	pg_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index.html css file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/css/index.css"]
+[INFO] 2014-02-17 15:03:37.743	-	pg_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/simple.html css file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/css/simple.css"]
+[INFO] 2014-02-17 15:03:37.746	-	core js file list -> ["http://192.168.146.236:8020/NEJ/src/base/global.js","http://192.168.146.236:8020/NEJ/src/base/platform.js","http://192.168.146.236:8020/NEJ/src/patched/config.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/config.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/config.js","http://192.168.146.236:8020/NEJ/src/patched/trident/config.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/config.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/config.js","http://192.168.146.236:8020/NEJ/src/patched/presto/config.js","http://192.168.146.236:8020/NEJ/src/base/constant.js","http://192.168.146.236:8020/NEJ/src/base/util.js","http://192.168.146.236:8020/NEJ/src/patched/api.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/api.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/api.js","http://192.168.146.236:8020/NEJ/src/patched/trident/api.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/api.js","http://192.168.146.236:8020/NEJ/src/patched/com/api.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/api.js","http://192.168.146.236:8020/NEJ/src/patched/presto/api.js","http://192.168.146.236:8020/NEJ/src/util/encode/json.js","http://192.168.146.236:8020/NEJ/src/patched/json.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/json.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/json.js","http://192.168.146.236:8020/NEJ/src/patched/trident/json.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/json.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/json.js","http://192.168.146.236:8020/NEJ/src/patched/presto/json.js","http://192.168.146.236:8020/NEJ/src/base/element.js","http://192.168.146.236:8020/NEJ/src/base/event.js","http://192.168.146.236:8020/NEJ/src/util/event.js","http://192.168.146.236:8020/NEJ/src/util/dispatcher/module.2.js","D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/module.js","http://192.168.146.236:8020/NEJ/src/util/tab/tab.js","http://192.168.146.236:8020/NEJ/src/util/template/trimpath.nej.js","http://192.168.146.236:8020/NEJ/src/util/template/jst.js","http://192.168.146.236:8020/NEJ/src/util/event/event.js","http://192.168.146.236:8020/NEJ/src/util/ajax/loader/loader.js","http://192.168.146.236:8020/NEJ/src/util/ajax/loader/html.js","http://192.168.146.236:8020/NEJ/src/util/ajax/loader/style.js","http://192.168.146.236:8020/NEJ/src/util/ajax/loader/script.js","http://192.168.146.236:8020/NEJ/src/util/ajax/tag.js","http://192.168.146.236:8020/NEJ/src/util/cache/cookie.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/proxy.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/xhr.js","http://192.168.146.236:8020/NEJ/src/util/timer/animation.js","http://192.168.146.236:8020/NEJ/src/util/flash/flash.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/flash.js","http://192.168.146.236:8020/NEJ/src/patched/message.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/message.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/message.js","http://192.168.146.236:8020/NEJ/src/patched/trident/message.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/message.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/message.js","http://192.168.146.236:8020/NEJ/src/patched/presto/message.js","http://192.168.146.236:8020/NEJ/src/util/ajax/message.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/frame.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/upload.js","http://192.168.146.236:8020/NEJ/src/patched/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/trident/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/presto/ajax.js","http://192.168.146.236:8020/NEJ/src/util/ajax/xdr.js","http://192.168.146.236:8020/NEJ/src/util/template/tpl.js"]
+[INFO] 2014-02-17 15:03:37.760	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a0.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a0.js"]
+[INFO] 2014-02-17 15:03:37.761	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a1.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a1.js"]
+[INFO] 2014-02-17 15:03:37.763	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.a2.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.a2.js"]
+[INFO] 2014-02-17 15:03:37.764	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/a.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/a.js"]
+[INFO] 2014-02-17 15:03:37.765	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b0.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b0.js"]
+[INFO] 2014-02-17 15:03:37.767	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b1.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b1.js"]
+[INFO] 2014-02-17 15:03:37.768	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.b2.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.b2.js"]
+[INFO] 2014-02-17 15:03:37.770	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/b.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/b.js"]
+[INFO] 2014-02-17 15:03:37.772	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/c.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/c.js"]
+[INFO] 2014-02-17 15:03:37.773	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d0.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d0.js"]
+[INFO] 2014-02-17 15:03:37.774	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d1.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d1.js"]
+[INFO] 2014-02-17 15:03:37.775	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.d2.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.d2.js"]
+[INFO] 2014-02-17 15:03:37.776	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/d.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/d.js"]
+[INFO] 2014-02-17 15:03:37.777	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/m.html js file list -> ["D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/m.js"]
+[INFO] 2014-02-17 15:03:37.778	-	tp_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index/ui.html js file list -> ["http://192.168.146.236:8020/NEJ/src/ui/base.js","D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/module/index/ui.js"]
+[INFO] 2014-02-17 15:03:37.780	-	pg_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/index.html js file list -> ["http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/node.js","http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/util.js","http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/group.js","http://192.168.146.236:8020/NEJ/src/util/dispatcher/dsp/group.single.js","http://192.168.146.236:8020/NEJ/src/util/history/history.js","http://192.168.146.236:8020/NEJ/src/util/dispatcher/dispatcher.2.js","D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/page/index.js"]
+[INFO] 2014-02-17 15:03:37.782	-	pg_ for D:/workspace/git/NEJPublisher/demo/web-app/src/html/simple.html js file list -> ["http://192.168.146.236:8020/NEJ/src/base/global.js","http://192.168.146.236:8020/NEJ/src/base/platform.js","http://192.168.146.236:8020/NEJ/src/patched/config.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/config.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/config.js","http://192.168.146.236:8020/NEJ/src/patched/trident/config.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/config.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/config.js","http://192.168.146.236:8020/NEJ/src/patched/presto/config.js","http://192.168.146.236:8020/NEJ/src/base/constant.js","http://192.168.146.236:8020/NEJ/src/patched/api.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/api.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/api.js","http://192.168.146.236:8020/NEJ/src/patched/trident/api.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/api.js","http://192.168.146.236:8020/NEJ/src/patched/com/api.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/api.js","http://192.168.146.236:8020/NEJ/src/patched/presto/api.js","http://192.168.146.236:8020/NEJ/src/base/event.js","http://192.168.146.236:8020/NEJ/src/util/encode/json.js","http://192.168.146.236:8020/NEJ/src/patched/json.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/json.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/json.js","http://192.168.146.236:8020/NEJ/src/patched/trident/json.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/json.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/json.js","http://192.168.146.236:8020/NEJ/src/patched/presto/json.js","http://192.168.146.236:8020/NEJ/src/base/element.js","http://192.168.146.236:8020/NEJ/src/base/util.js","http://192.168.146.236:8020/NEJ/src/util/template/trimpath.nej.js","http://192.168.146.236:8020/NEJ/src/util/template/jst.js","http://192.168.146.236:8020/NEJ/src/util/event.js","http://192.168.146.236:8020/NEJ/src/util/event/event.js","http://192.168.146.236:8020/NEJ/src/util/ajax/loader/loader.js","http://192.168.146.236:8020/NEJ/src/util/ajax/loader/html.js","http://192.168.146.236:8020/NEJ/src/util/ajax/loader/style.js","http://192.168.146.236:8020/NEJ/src/util/ajax/loader/script.js","http://192.168.146.236:8020/NEJ/src/util/ajax/tag.js","http://192.168.146.236:8020/NEJ/src/util/cache/cookie.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/proxy.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/xhr.js","http://192.168.146.236:8020/NEJ/src/util/timer/animation.js","http://192.168.146.236:8020/NEJ/src/util/flash/flash.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/flash.js","http://192.168.146.236:8020/NEJ/src/patched/message.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/message.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/message.js","http://192.168.146.236:8020/NEJ/src/patched/trident/message.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/message.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/message.js","http://192.168.146.236:8020/NEJ/src/patched/presto/message.js","http://192.168.146.236:8020/NEJ/src/util/ajax/message.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/frame.js","http://192.168.146.236:8020/NEJ/src/util/ajax/proxy/upload.js","http://192.168.146.236:8020/NEJ/src/patched/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/trident-0/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/trident-1/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/trident/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/gecko/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/webkit/ajax.js","http://192.168.146.236:8020/NEJ/src/patched/presto/ajax.js","http://192.168.146.236:8020/NEJ/src/util/ajax/xdr.js","http://192.168.146.236:8020/NEJ/src/util/template/tpl.js","D:/workspace/git/NEJPublisher/demo/web-app/src/javascript/page/simple.js"]
+[INFO] 2014-02-17 15:03:38.113	-	output D:/workspace/git/NEJPublisher/demo/deploy/names.txt
+[INFO] 2014-02-17 15:03:38.115	-	output D:/workspace/git/NEJPublisher/demo/web-app/r/core.css
+[INFO] 2014-02-17 15:03:38.117	-	output D:/workspace/git/NEJPublisher/demo/web-app/r/core.js
+[INFO] 2014-02-17 15:03:38.120	-	output D:/workspace/git/NEJPublisher/demo/web-app/r/pp_simple.js
+[INFO] 2014-02-17 15:03:38.124	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/a.a0.html
+[INFO] 2014-02-17 15:03:38.125	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/a.a1.html
+[INFO] 2014-02-17 15:03:38.126	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/a.a2.html
+[INFO] 2014-02-17 15:03:38.127	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/a.html
+[INFO] 2014-02-17 15:03:38.128	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/b.b0.html
+[INFO] 2014-02-17 15:03:38.129	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/b.b1.html
+[INFO] 2014-02-17 15:03:38.130	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/b.b2.html
+[INFO] 2014-02-17 15:03:38.131	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/b.html
+[INFO] 2014-02-17 15:03:38.132	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/c.html
+[INFO] 2014-02-17 15:03:38.134	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/d.d0.html
+[INFO] 2014-02-17 15:03:38.136	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/d.d1.html
+[INFO] 2014-02-17 15:03:38.138	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/d.d2.html
+[INFO] 2014-02-17 15:03:38.139	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/d.html
+[INFO] 2014-02-17 15:03:38.140	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/m.html
+[INFO] 2014-02-17 15:03:38.142	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index/ui.html
+[INFO] 2014-02-17 15:03:38.143	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/index.html
+[INFO] 2014-02-17 15:03:38.144	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/simple.html
+[INFO] 2014-02-17 15:03:38.145	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/test/a.html
+[INFO] 2014-02-17 15:03:38.146	-	output D:/workspace/git/NEJPublisher/demo/web-app/pub/test/b.html
+[INFO] 2014-02-17 15:03:38.166	-	release done! view release log D:/workspace/git/NEJPublisher/demo/deploy/20140217.150335786.txt
