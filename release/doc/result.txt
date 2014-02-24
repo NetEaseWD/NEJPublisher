@@ -28,6 +28,9 @@ output		[Object]		- output information
 core		[Object]		- js/css in core file config
  - cs		[Array]			- css in core file list
  - js		[Array]			- js in core file list
+mask        [Object]        - js/css mask in core file config
+ - cs       [Object]        - css not in core file list
+ - js       [Object]        - js not in core file list
 version		[Object]		- module template file version information
  - root		[String]		- module template root
  - ver		[Object]		- module template file version map

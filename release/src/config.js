@@ -316,8 +316,12 @@ var __doCheckConfig_OBF = function(){
 var __doCheckConfig_CORE = function(){
     // CORE_LIST_JS
     // CORE_LIST_CS
+    // CORE_MASK_JS
+    // CORE_MASK_CS
     __doCheckInputCoreConfig('CORE_LIST_JS');
     __doCheckInputCoreConfig('CORE_LIST_CS');
+    __doCheckInputCoreConfig('CORE_MASK_JS');
+    __doCheckInputCoreConfig('CORE_MASK_CS');
 };
 /**
  * 解析配置文件

@@ -1081,6 +1081,10 @@ var __doDownloadResource = function(_result){
     });
     __doDownloadExternalCS(_result.core.cs,_result);
     __doParseJSList(_result.core.js,_result);
+    __doParseJSPatched(
+        _result.mask.js,
+        _result.conf.root
+    );
 	__doDownloadCheck(_result);
 };
 /*
@@ -1094,11 +1098,13 @@ var __doPrepareCache = (function(){
         if (!!_result.output) return;
         var _core = _result.core;
         _core.js = __doParseJSDependency(_core.js,_result);
-        
-        _result.output = {js:{core:_core.js||[]}
-                         ,css:{core:_core.cs||[]}
-                         ,core:{}};
+        _result.output = {
+            core:{},
+            js:{core:_core.js||[]},
+            css:{core:_core.cs||[]}
+        };
         // build core js/css maps
+        /*
         var _cmap = _result.output.core;
         for(var i=0,l=_list.length,_files;i<l;i++){
             _files = _core[_list[i]];
@@ -1107,6 +1113,7 @@ var __doPrepareCache = (function(){
                 _cmap[_files[j]] = !0;
             }
         }
+        */
         delete _result.core;
     };
 })();
@@ -1117,7 +1124,8 @@ var __doPrepareCache = (function(){
  */
 var __doPrepareCore = (function(){
     var _list = ['js','cs'],
-        _xmxp = {cs:'STYLE',js:'SCRIPT'};
+        _xmxp = {cs:'STYLE',js:'SCRIPT'},
+        _xcfg = {core:'CORE_LIST_',mask:'CORE_MASK_'};
     var _complete = function(_list,_root){
         if (!_list||!_list.length) return;
         for(var i=0,l=_list.length;i<l;i++){
@@ -1126,18 +1134,18 @@ var __doPrepareCore = (function(){
             _list[i] = _doAbsolutePath(_list[i],_root);
         }
     };
-    return function(_result){
-        var _core = _result.core;
+    var _prepare = function(_name,_prefix,_result){
+        var _core = _result[_name];
         if (!_core){
             _core = {};
-            _result.core = _core;
+            _result[_name] = _core;
         }
         for(var i=0,l=_list.length,_file,_cont,_ign;i<l;i++){
             // check ignore core config
             _ign = _config.get('X_NOCORE_'+_xmxp[_list[i]]); 
             if (_ign) continue;
             // core config in release.conf
-            _file = _config.get('CORE_LIST_'
+            _file = _config.get(_prefix
                   + _list[i].toUpperCase());
             if (!_file) continue;
             if (util.isArray(_file)){
@@ -1155,6 +1163,11 @@ var __doPrepareCore = (function(){
         _complete(_core.cs,_root);
         _complete(_core.js,_root);
     };
+    return function(_result){
+        for(var x in _xcfg){
+            _prepare(x,_xcfg[x],_result);
+        }
+    };
 })();
 /*
  * 准备列表
@@ -1166,15 +1179,31 @@ var __doPrepareCore = (function(){
  * @return {Void}
  */
 var __doPrepareList = (function(){
-    var _xmxp = {css:'STYLE',js:'SCRIPT'};
+    var _xmxp = {css:'STYLE',js:'SCRIPT'},
+        _xmsk = {css:'cs',js:'js'};
     var f = function(){
         return !1;
+    };
+    var _split = function(_core,_mask){
+        var _map = {};
+        if (!!_mask&&_mask.length>0){
+            for(var i=0,l=_mask.length;i<l;i++){
+                _map[_mask[i]] = !0;
+            }
+        }
+        _log.info('mask map -> %j',_map);
+        for(var i=_core.length-1;i>=0;i--){
+            if (!!_map[_core[i]]){
+                _core.splice(i,1);
+            }
+        }
     };
     return function(_result,_conf){
         __doPrepareCache(_result);
         var _type = _conf.type,
             _xmap = {},
-            _xlst = _result.output[_type].core,
+            _ocfg = _result.output[_type],
+            _xlst = _ocfg.core,
             _fmap = _result.output.core,
             _iscf = _xlst.length>0||
                     _config.get('X_NOCORE_'+_xmxp[_type]);
@@ -1196,11 +1225,16 @@ var __doPrepareList = (function(){
                 _xmap[_file]++;
                 if (_xmap[_file]==2){
                     _xlst.push(_file);
-                    _fmap[_file] = !0;
                 }
             }
         });
+        // mask core file 
+        _split(_xlst,_result.mask[_xmsk[_type]]);
+        for(var i=_xlst.length-1;i>=0;i--){
+            _fmap[_xlst[i]] = !0;
+        }
         _log.info('core %s file list -> %j',_type,_xlst);
+        // split core from page
         var _output = _result.output[_type];
         _doEachResult(_result.files,function(_fobj,_prefix,_name){
             var _list = _fobj[_prefix+_type];
