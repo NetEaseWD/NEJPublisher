@@ -863,12 +863,18 @@ var __doParseJSPatched = (function(){
             _istring = !util.isArray(_patched);
         for(var i=_list.length-1,_name;i>=0;i--){
             _name = _list[i];
-            if (!!_native&&_name.indexOf('{native}')>=0)
+            // for source code
+            if (_name.indexOf('{')!=0){
+                continue;
+            }
+            // for path
+            if (!!_native&&_name.indexOf('{native}')>=0){
                 _list[i] = _name.replace('{native}',_native);
+            }
             if (_name.indexOf('{patch}')>=0){
-                if (_istring)
+                if (_istring){
                     _list[i] = _name.replace('{patch}',_patched);
-                else{
+                }else{
                     _name = _name.replace('{patch}','');
                     _name = (_patched.join(_name+',')+_name).split(',');
                     _name.unshift(i,1);
@@ -876,8 +882,15 @@ var __doParseJSPatched = (function(){
                 }
             }
         }
-        for(var i=0,l=_list.length;i<l;i++)
-            _list[i] = _complete(_list[i],_conf);
+        for(var i=0,l=_list.length,_name;i<l;i++){
+            _name = _list[i];
+            // for source code
+            if (_name.indexOf('{')!=0){
+                continue;
+            }
+            // for path
+            _list[i] = _complete(_name,_conf);
+        }
     };
 })();
 /*
