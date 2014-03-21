@@ -143,7 +143,7 @@ var __doParseHtml = (function(){
         _reg12 = /<style\b/i,
         _reg13 = /<\/style>/i,
         // script
-        _reg20 = /<script[\w\W]*?src\s*=\s*["'](.*?)["']/i,
+        _reg20 = /<script[^>]*?src\s*=\s*["'](.*?)["']/i,
         _reg21 = /^\s*<script\b/i,
         _reg22 = /<\/script>\s*$/i,
         // template
