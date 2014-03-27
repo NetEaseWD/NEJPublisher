@@ -4,6 +4,7 @@ conf		[Object]		- config info by define
    - pro	[String]		- project js root
    - lib	[String]		- nej lib js root
    - patch	[Array|String]	- nej patched root
+ - deps     [Object]        - old project dependency config
 files		[Object]		- file information
  - js		[Boolean]		- has core js file
  - css		[Boolean]		- has core css file

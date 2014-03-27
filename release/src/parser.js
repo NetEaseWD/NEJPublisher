@@ -554,6 +554,8 @@ var __doParseHtmlDefine = (function(){
             _roots = _platform(_query.p);
         delete _query.p;
         delete _query.c;
+        var _deps = _query.d;
+        delete _query.d;
         var _cfrot = _conf.root||{};
         // pro/com/...
         for(var x in _query)
@@ -567,6 +569,12 @@ var __doParseHtmlDefine = (function(){
         _cfrot.lib = _config.get('NEJ_DIR')||
                      (path.dirname(_arr[0])+'/');
         _conf.root = _cfrot;
+        // dependency config
+        if (!!_deps){
+            __doParseHtmlDepConf(
+                _doAbsolutePath(_deps,_root),_conf
+            );
+        }
     };
 })();
 /*
@@ -681,6 +689,43 @@ var __doParseHtmlResource = (function(){
     };
 })();
 /**
+ * 解析依赖配置文件
+ * @param  {String} _file 路径
+ * @return {Void}
+ */
+var __doParseHtmlDepConf = (function(){
+    var _xconf;
+    var _doConfig = function(_maps){
+        console.log('deps config map -> %j',_maps);
+        if (!_maps) return;
+        var _deps = _xconf.deps,
+            _root = _xconf.root;
+        for(var x in _maps){
+            console.log('add dep config -> %s:%j',x,_maps[x]);
+            var _file = [x];
+            __doParseJSPatched(_file,_root);
+            _file = _file[0];
+            __doParseJSPatched(_maps[x],_root);
+            _deps[_file] = _maps[x];
+            console.log('add dep config +> %s:%j',_file,_maps[x]);
+        }
+    };
+    var NEJ = {config:_doConfig};
+    return function(_file,_conf){
+        console.log('deps config file -> %s',_file);
+        var _list = _fs.read(
+            _file,_config.get('FILE_CHARSET')
+        );
+        console.log('deps file content -> %j',_list);
+        if (!_list||!_list.length) return;
+        if (!_conf.deps){
+            _conf.deps = {};
+        }
+        _xconf = _conf;
+        eval(_list.join('\n'));
+    };
+})();
+/**
  * 分析需要解析的文件列表
  * @param  {String} _dir    目录
  * @param  {Object} _result 结果集
@@ -729,6 +774,16 @@ var __doListHtmlFile = function(_dir,_result){
  */
 var __doParseJSList = function(_list,_result){
     if (!_result.deps) _result.deps = {};
+    // merge deps config
+    var _xmap = _result.conf.deps;
+    if (!!_xmap){
+        var _deps = _result.deps;
+        for(var x in _xmap){
+            _deps[x] = _xmap[x];
+        }
+        delete _result.conf.deps;
+    }
+    _log.info('---------------------> %j',_result.deps);
     if (!_result.data) _result.data = {};
     if (!_list||!_list.length) return;
     __doParseJSPatched(_list,_result.conf.root);
@@ -837,7 +892,10 @@ var __doParseJSContent = (function(){
             }
         }
         _result.data[_alias] = _map.code||'';
-        _result.deps[_alias] = _map.deps||[];
+        // deps can from deps config file
+        if (!!_map.deps||!_result.deps[_alias]){
+            _result.deps[_alias] = _map.deps||[];
+        }
         _log.debug('dependency result: %s -> %j',_alias,_map.deps);
         __doParseJSList(_result.deps[_alias],_result);
     };
