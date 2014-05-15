@@ -288,7 +288,7 @@ var __doCheckConfig_DM = function(){
     var _static = __getConfig('DIR_STATIC')
                    .replace(__getConfig('DIR_WEBROOT'),'/')||'/res/';
     __setConfig('DIR_STATIC_REG',new RegExp(
-               util.format('([\'"])([.\\w/]*?%s[.\\w/]*?)\\1',_static),'g'));
+               util.format('([\'"])([.\\w/@-]*?%s[.\\w/@-]*?)\\1',_static),'g'));
 };
 /*
  * 检查混淆配置
