@@ -1,2 +1,31 @@
 CACHE MANIFEST
-#VERSION = 07fe510404132c8f52aa5e4d31a2e0fe
+#VERSION = 8458b4f511de7a333e85b0ccfcd47583
+
+CACHE:
+/r/core.css
+/r/core.js
+/r/pp_simple.js
+/pub/index/a.a0.html
+/pub/index/a.a1.html
+/pub/index/a.a2.html
+/pub/index/a.html
+/pub/index/b.b0.html
+/pub/index/b.b1.html
+/pub/index/b.b2.html
+/pub/index/b.html
+/pub/index/c.html
+/pub/index/d.d0.html
+/pub/index/d.d1.html
+/pub/index/d.d2.html
+/pub/index/d.html
+/pub/index/m.html
+/pub/index/ui.html
+/pub/index.html
+/pub/simple.html
+/pub/test/a.html
+/pub/test/b.html
+
+NETWORK:
+*
+
+FALLBACK:
