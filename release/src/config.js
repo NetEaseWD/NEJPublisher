@@ -165,6 +165,37 @@ var __doCheckBoolean = function(_key){
     __setConfig(_key,__getConfig(_key).toLowerCase()==='true');
 };
 /*
+ * 检查manifest配置模板
+ * @return {Void}
+ */
+var __doCheckManifestTpl = function(){
+    var _content = '',
+        _value = __getConfig('MANIFEST_TEMPLATE');
+    if (!!_value){
+        _value = _path.path(_value,__getConfig('DIR_CONFIG'));
+        if (!_path.exist(_value)){
+            _log.warn('MANIFEST_TEMPLATE[%s] not exist!',_value);
+        }else{
+            var _list = _fs.read(_value);
+            if (!!_list&&_list.length>0){
+                _content = _list.join('\n');
+            }else{
+                _log.warn('MANIFEST_TEMPLATE[%s] is empty!',_value);
+            }
+        }
+    }
+    if (!_content){
+        _content = [
+            'CACHE MANIFEST',
+            '#VERSION = #<VERSION>','',
+            'CACHE:','#<CACHE_LIST>','',
+            'NETWORK:','*','',
+            'FALLBACK:',''
+        ].join('\n');
+    }
+    __setConfig('MANIFEST_TEMPLATE',_content);
+};
+/*
  * 检查路径相关配置
  * @return {Void}
  */
@@ -213,13 +244,22 @@ var __doCheckConfig_DIR = function(){
         _end = __doCheckValueWithDefault('ALIAS_END_TAG','}').replace(_reg,'\\$1');
     __setConfig('ALIAS_REG',new RegExp(util.format('%s(.*?)%s',_beg,_end),'ig'));
     __setConfig('ALIAS_DICTIONARY',JSON.parse(_dic));
-    // DIR_MANIFEST
-    __doCheckValueWithDefault('DIR_MANIFEST','');
-    var _value = __doCheckOutputFileConfig('DIR_MANIFEST',_root);
+    // MANIFEST_OUTPUT
+    // MANIFEST_TEMPLATE
+    // MANIFEST_FILTER
+    __doCheckValueWithDefault('MANIFEST_OUTPUT','');
+    var _value = __doCheckOutputFileConfig('MANIFEST_OUTPUT',_root);
     if (!!_value&&_value.indexOf(_root)<0){
-        _log.error('DIR_MANIFEST[%s] is not in webroot and ignore this config!',_value);
-        __setConfig('DIR_MANIFEST','');
+        _log.error('MANIFEST_OUTPUT[%s] is not in webroot and ignore this config!',_value);
+        __setConfig('MANIFEST_OUTPUT','');
     }
+    var _value = __getConfig('MANIFEST_FILTER');
+    if (!!_value){
+        _value = new RegExp(_value,'i');
+    }
+    __setConfig('MANIFEST_FILTER',_value);
+    __doCheckManifestTpl();
+    // temporary dir
     _fs.mkdir(__getConfig('DIR_TEMPORARY'));
 };
 /*

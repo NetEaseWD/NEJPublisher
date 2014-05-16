@@ -783,7 +783,7 @@ var __doParseJSList = function(_list,_result){
         }
         delete _result.conf.deps;
     }
-    _log.info('---------------------> %j',_result.deps);
+    //_log.info('---------------------> %j',_result.deps);
     if (!_result.data) _result.data = {};
     if (!_list||!_list.length) return;
     __doParseJSPatched(_list,_result.conf.root);
@@ -1583,7 +1583,7 @@ var __doMergeVersion = function(_result){
             ver:{},
             root:_output.replace(_config.get('DIR_WEBROOT'),'/')
         };
-    var _files = _result.files,_md5,_value,
+    var _files = _result.files,_md5,_value,_source,
         _input = _config.get('DIR_SOURCE'),
         _root  = _result.version.root,
         _cfgroot = _config.get('DM_STATIC_MR'),
@@ -1592,10 +1592,11 @@ var __doMergeVersion = function(_result){
     // for manifest
     for(var x in _files){
         if (x.indexOf(_input)<0) continue;
-        _md5 = _doVersionFile(_files[x].source);
+        _source = _files[x].source;
+        _md5 = _doVersionFile(_source);
         _value = x.replace(_input,'');
         _manifest[_root+_value] = _md5;
-        if (_value.indexOf('#<VERSION>')<0)
+        if (_source.indexOf('#<VERSION>')<0)
             _version[_value] = _md5;
     }
     var _source,_relatived = _config.get('DM_STATIC_RR'),
@@ -1742,21 +1743,40 @@ var __doOutputHtml = function(_result){
  * @return {Void}
  */
 var __doOutputManifest = (function(){
-    var _template = ['CACHE MANIFEST'
-                    ,'#VERSION = #<VERSION>',''
-                    ,'CACHE:','#<CACHE_LIST>',''
-                    ,'NETWORK:','*',''
-                    ,'FALLBACK:',''].join('\n');
+    var _reg0 = /\.js$/i,
+        _reg1 = /\.css/i,
+        _reg2 = /^\//;
+    var _doCompletePath = function(_file){
+        var _root = '/';
+        // for js
+        if (_reg0.test(_file)){
+            _root = _config.get('DM_STATIC_JS')||_root;
+            return _root+_file.replace(_reg2,'');
+        }
+        // for css
+        if (_reg1.test(_file)){
+            _root = _config.get('DM_STATIC_CS')||_root;
+            return _root+_file.replace(_reg2,'');
+        }
+        // for html
+        return _file;
+    };
     return function(_result){
-        var _file = _config.get('DIR_MANIFEST');
+        var _file = _config.get('MANIFEST_OUTPUT');
         if (!_file) return;
         var _arr = [],_brr = [],
-            _data = _result.manifest;
+            _data = _result.manifest,
+            _reg = _config.get('MANIFEST_FILTER');
+        //_log.info('++++++++> %j',_data);
         for(var x in _data){
-            _arr.push(x);        // url
-            _brr.push(_data[x]); // version
+            // check filter
+            if (!!_reg&&_reg.test(x))
+                continue;
+            _arr.push(_doCompletePath(x)); // url
+            _brr.push(_data[x]);           // version
         }
-        var _content = _template.replace('#<CACHE_LIST>',_arr.join('\n'))
+        var _template = _config.get('MANIFEST_TEMPLATE'),
+            _content = _template.replace('#<CACHE_LIST>',_arr.join('\n'))
                                 .replace('#<VERSION>',_doVersionFile(_brr.sort().join('.')));
         _log.info('output %s',_file);
         _fs.write(_file,_content,_config.get('FILE_CHARSET'));
