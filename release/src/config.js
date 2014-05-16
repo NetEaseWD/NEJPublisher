@@ -319,12 +319,17 @@ var __doCheckConfig_DM = function(){
     // DM_STATIC
     // DM_STATIC_CS
     // DM_STATIC_JS
+    // DM_STATIC_MF
+    // DM_STATIC_MR
     var _domain = __getConfig('DM_STATIC');
     __doCheckValueWithDefault('DM_STATIC_CS',_domain);
     __doCheckValueWithDefault('DM_STATIC_JS',_domain);
+    __doCheckValueWithDefault('DM_STATIC_MF',_domain);
+    __doCheckValueWithDefault('DM_STATIC_MR','');
     __doCheckDomainConfig('DM_STATIC');
     __doCheckDomainConfig('DM_STATIC_CS');
     __doCheckDomainConfig('DM_STATIC_JS');
+    __doCheckDomainConfig('DM_STATIC_MF');
     var _static = __getConfig('DIR_STATIC')
                    .replace(__getConfig('DIR_WEBROOT'),'/')||'/res/';
     __setConfig('DIR_STATIC_REG',new RegExp(

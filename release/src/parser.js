@@ -1726,17 +1726,27 @@ var __doOutputFile = (function(){
  * @param  {Object} _result 解析结果集
  * @return {Void}
  */
-var __doOutputHtml = function(_result){
-    var _output,
-        _files = _result.files,
-        _charset = _config.get('FILE_CHARSET');
-    for(var x in _files){
-        _output = _doOutputPath(x);
-        _fs.mkdir(path.dirname(_output)+'/');
-        _log.info('output %s',_output);
-        _fs.write(_output,_files[x].source,_charset);
-    }
-};
+var __doOutputHtml = (function(){
+    var _reg0 = /<!--\s*manifest\s*-->/i;
+    return function(_result){
+        var _output,_source,_mfile,
+            _files = _result.files,
+            _charset = _config.get('FILE_CHARSET'),
+            _manifest = _config.get('MANIFEST_OUTPUT'),
+            _root = _config.get('DM_STATIC_MF');
+        for(var x in _files){
+            _output = _doOutputPath(x);
+            _fs.mkdir(path.dirname(_output)+'/');
+            _log.info('output %s',_output);
+            _source = _files[x].source;
+            if (!!_manifest&&_reg0.test(_source)){
+                _mfile = _doRelativePath('MF',_output,_manifest);
+                _source = _source.replace(_reg0,' manifest="'+_mfile+'"');
+            }
+            _fs.write(_output,_source,_charset);
+        }
+    };
+})();
 /*
  * 输出HTML5离线配置文件
  * @param  {Object} _result 解析结果集
