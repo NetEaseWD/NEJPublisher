@@ -148,7 +148,9 @@ var __doParseHtml = (function(){
         _reg22 = /<\/script>\s*$/i,
         // template
         _reg30 = /<textarea.*?name\s*=\s*["'](js|css|html)["']/i,
-        _reg31 = /<\/textarea>/i;
+        _reg31 = /<\/textarea>/i,
+        // html manifest
+        _reg40 = /^\s*<html(.*?)>\s*$/i;
     // check core param in define tag
     var _hasCore = function(_txg,_name){
         if (!_txg.end&&_txg.name==_name){
@@ -187,6 +189,12 @@ var __doParseHtml = (function(){
         if (_config.get('X_NOCOMPRESS')) _tag.brr = [];
         for(var i=0,l=_list.length,_line,_tmp,_txg,_rot;i<l;i++){
             _line = _list[i];
+            // manifest
+            if (_tag.name=='MANIFEST'&&_reg40.test(_line)){
+                delete _tag.name;
+                delete _tag.param;
+                _line = util.format('<html%s %s>',RegExp.$1,'#<MANIFEST>');
+            }
             // tag line
             if (_reg0.test(_line)&&
                !_reg00.test(_line)&&
@@ -376,6 +384,7 @@ var __doParseHtmlTAGStart = function(_tag,_last,_result){
         case 'MODULE':
         case 'DEFINE':
         case 'IGNORE':
+        case 'MANIFEST':
             if (!!_last.name){
                 _log.warn('start tag[%s] before end tag[%s],ignore start tag!',_tag.name,_last.name);
             }else{
@@ -384,12 +393,13 @@ var __doParseHtmlTAGStart = function(_tag,_last,_result){
                 if (_tag.name=='DEFINE'){
                 	_list.push('#<PG_JS>');
                 }
-                if (_tag.name=='VERSION')
+                if (_tag.name=='VERSION'){
                     _list.push('#<VERSION>');
+                }
             }
         break;
         default:
-            _log.warn('error named start tag[%s],igonre start tag!',_tag.name);
+            _log.warn('unknown start tag[%s],igonre start tag!',_tag.name);
         break;
     }
 };
@@ -439,7 +449,7 @@ var __doParseHtmlTAGEnd = function(_tag,_last,_result){
             delete _last.param;
         break;
         default:
-            _log.warn('error named end tag[%s],igonre end tag!',_tag.name);
+            _log.warn('unknown end tag[%s],igonre end tag!',_tag.name);
         break;
     }
 };
@@ -1726,27 +1736,33 @@ var __doOutputFile = (function(){
  * @param  {Object} _result 解析结果集
  * @return {Void}
  */
-var __doOutputHtml = (function(){
-    var _reg0 = /<!--\s*manifest\s*-->/i;
-    return function(_result){
-        var _output,_source,_mfile,
-            _files = _result.files,
-            _charset = _config.get('FILE_CHARSET'),
-            _manifest = _config.get('MANIFEST_OUTPUT'),
-            _root = _config.get('DM_STATIC_MF');
-        for(var x in _files){
-            _output = _doOutputPath(x);
-            _fs.mkdir(path.dirname(_output)+'/');
-            _log.info('output %s',_output);
-            _source = _files[x].source;
-            if (!!_manifest&&_reg0.test(_source)){
-                _mfile = _doRelativePath('MF',_output,_manifest);
-                _source = _source.replace(_reg0,' manifest="'+_mfile+'"');
+var __doOutputHtml = function(_result){
+    var _output,_source,_mfile,
+        _files = _result.files,
+        _charset = _config.get('FILE_CHARSET'),
+        _manifest = _config.get('MANIFEST_OUTPUT'),
+        _root = _config.get('DM_STATIC_MF');
+    for(var x in _files){
+        _output = _doOutputPath(x);
+        _fs.mkdir(path.dirname(_output)+'/');
+        _log.info('output %s',_output);
+        _source = _files[x].source;
+        if (!!_manifest&&_source.indexOf('#<MANIFEST>')>=0){
+            _mfile = _doRelativePath('MF',_output,_manifest);
+            _source = _source.replace('#<MANIFEST>',' manifest="'+_mfile+'"');
+            if (!_result.manifest_ent){
+                _result.manifest_ent = [];
             }
-            _fs.write(_output,_source,_charset);
+            _result.manifest_ent.push(
+                _result.manifest[
+                    _result.version.root+
+                    x.replace(_config.get('DIR_SOURCE'),'')
+                ]
+            );
         }
-    };
-})();
+        _fs.write(_output,_source,_charset);
+    }
+};
 /*
  * 输出HTML5离线配置文件
  * @param  {Object} _result 解析结果集
@@ -1785,6 +1801,10 @@ var __doOutputManifest = (function(){
             _arr.push(_doCompletePath(x)); // url
             _brr.push(_data[x]);           // version
         }
+        if (!!_result.manifest_ent){
+            _brr.push.apply(_brr,_result.manifest_ent);
+        }
+        //console.log('++++++> %j',_brr);
         var _template = _config.get('MANIFEST_TEMPLATE'),
             _content = _template.replace('#<CACHE_LIST>',_arr.join('\n'))
                                 .replace('#<VERSION>',_doVersionFile(_brr.sort().join('.')));
