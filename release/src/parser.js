@@ -1750,6 +1750,7 @@ var __doOutputHtml = function(_result){
         if (!!_manifest&&_source.indexOf('#<MANIFEST>')>=0){
             _mfile = _doRelativePath('MF',_output,_manifest);
             _source = _source.replace('#<MANIFEST>',' manifest="'+_mfile+'"');
+            // cal manifest entry version
             if (!_result.manifest_ent){
                 _result.manifest_ent = [];
             }
