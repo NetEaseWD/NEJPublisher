@@ -561,7 +561,7 @@ var __doParseHtmlDefine = (function(){
     return function(_url,_conf,_root){
         var _arr   = _url.split('?'),
             _query = query.parse(_doMerge(_arr[1])||''),
-            _roots = _platform(_query.p);
+            _roots = _platform(_config.get('NEJ_PLATFORM')||_query.p);
         delete _query.p;
         delete _query.c;
         var _deps = _query.d;

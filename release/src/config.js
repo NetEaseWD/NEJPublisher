@@ -229,11 +229,13 @@ var __doCheckConfig_DIR = function(){
         __doCheckOutputPathConfig('DIR_OUTPUT_STATIC',_root);
     }
     // DIR_STATIC
-    // NEJ_DIR
     // DIR_TEMPORARY
     __doCheckValueWithDefault('DIR_STATIC','./res');
     __doCheckInputPathConfig('DIR_STATIC',_root);
+    // NEJ_DIR
+    // NEJ_PLATFORM
     __doCheckInputPathConfig('NEJ_DIR',_root);
+    __doCheckValueWithDefault('NEJ_PLATFORM','');
     // ALIAS_START_TAG
     // ALIAS_END_TAG
     // ALIAS_DICTIONARY
