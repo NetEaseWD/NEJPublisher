@@ -259,6 +259,8 @@ var __doParseHtml = (function(){
                         __doParseHtmlDefine(
     					 _line.join('?'),_conf,_root);
                         continue;
+                    }else{
+                        __doParseHtmlDefine('',_conf,_root);
                     }
                 }
                 __doParseHtmlERS(_result,'pg_js',_line[0]);
