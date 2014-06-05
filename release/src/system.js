@@ -61,7 +61,7 @@ var __doRelease = function(_options){
             _result.onreleasedone(_result);
     };
     _parser.download(_result);
-}
+};
 /*
  * 清除日志
  * @return {Void}

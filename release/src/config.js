@@ -165,6 +165,37 @@ var __doCheckBoolean = function(_key){
     __setConfig(_key,__getConfig(_key).toLowerCase()==='true');
 };
 /*
+ * 检查manifest配置模板
+ * @return {Void}
+ */
+var __doCheckManifestTpl = function(){
+    var _content = '',
+        _value = __getConfig('MANIFEST_TEMPLATE');
+    if (!!_value){
+        _value = _path.path(_value,__getConfig('DIR_CONFIG'));
+        if (!_path.exist(_value)){
+            _log.warn('MANIFEST_TEMPLATE[%s] not exist!',_value);
+        }else{
+            var _list = _fs.read(_value);
+            if (!!_list&&_list.length>0){
+                _content = _list.join('\n');
+            }else{
+                _log.warn('MANIFEST_TEMPLATE[%s] is empty!',_value);
+            }
+        }
+    }
+    if (!_content){
+        _content = [
+            'CACHE MANIFEST',
+            '#VERSION = #<VERSION>','',
+            'CACHE:','#<CACHE_LIST>','',
+            'NETWORK:','*','',
+            'FALLBACK:',''
+        ].join('\n');
+    }
+    __setConfig('MANIFEST_TEMPLATE',_content);
+};
+/*
  * 检查路径相关配置
  * @return {Void}
  */
@@ -198,11 +229,13 @@ var __doCheckConfig_DIR = function(){
         __doCheckOutputPathConfig('DIR_OUTPUT_STATIC',_root);
     }
     // DIR_STATIC
-    // NEJ_DIR
     // DIR_TEMPORARY
     __doCheckValueWithDefault('DIR_STATIC','./res');
     __doCheckInputPathConfig('DIR_STATIC',_root);
+    // NEJ_DIR
+    // NEJ_PLATFORM
     __doCheckInputPathConfig('NEJ_DIR',_root);
+    __doCheckValueWithDefault('NEJ_PLATFORM','');
     // ALIAS_START_TAG
     // ALIAS_END_TAG
     // ALIAS_DICTIONARY
@@ -213,13 +246,22 @@ var __doCheckConfig_DIR = function(){
         _end = __doCheckValueWithDefault('ALIAS_END_TAG','}').replace(_reg,'\\$1');
     __setConfig('ALIAS_REG',new RegExp(util.format('%s(.*?)%s',_beg,_end),'ig'));
     __setConfig('ALIAS_DICTIONARY',JSON.parse(_dic));
-    // DIR_MANIFEST
-    __doCheckValueWithDefault('DIR_MANIFEST','');
-    var _value = __doCheckOutputFileConfig('DIR_MANIFEST',_root);
+    // MANIFEST_OUTPUT
+    // MANIFEST_TEMPLATE
+    // MANIFEST_FILTER
+    __doCheckValueWithDefault('MANIFEST_OUTPUT','');
+    var _value = __doCheckOutputFileConfig('MANIFEST_OUTPUT',_root);
     if (!!_value&&_value.indexOf(_root)<0){
-        _log.error('DIR_MANIFEST[%s] is not in webroot and ignore this config!',_value);
-        __setConfig('DIR_MANIFEST','');
+        _log.error('MANIFEST_OUTPUT[%s] is not in webroot and ignore this config!',_value);
+        __setConfig('MANIFEST_OUTPUT','');
     }
+    var _value = __getConfig('MANIFEST_FILTER');
+    if (!!_value){
+        _value = new RegExp(_value,'i');
+    }
+    __setConfig('MANIFEST_FILTER',_value);
+    __doCheckManifestTpl();
+    // temporary dir
     _fs.mkdir(__getConfig('DIR_TEMPORARY'));
 };
 /*
@@ -229,6 +271,7 @@ var __doCheckConfig_DIR = function(){
 var __doCheckConfig_EXT = function(){
     // NAME_SUFFIX
     // FILE_SUFFIXE
+    // FILE_FILTER
     // FILE_CHARSET
     // RAND_VERSION
     // STATIC_VERSION
@@ -248,6 +291,10 @@ var __doCheckConfig_EXT = function(){
     if (!!_suffix)
         _suffix = new RegExp('\\.(?:'+_suffix+')$','i');
     __setConfig('FILE_SUFFIXE',_suffix);
+    var _filter = __getConfig('FILE_FILTER');
+    if (!!_filter)
+        _filter = new RegExp(_filter,'i');
+    __setConfig('FILE_FILTER',_suffix);
     var _charset = __getConfig('FILE_CHARSET')||'utf-8';
     __setConfig('FILE_CHARSET',_charset.toLowerCase());
     __doCheckBoolean('RAND_VERSION');
@@ -274,16 +321,21 @@ var __doCheckConfig_DM = function(){
     // DM_STATIC
     // DM_STATIC_CS
     // DM_STATIC_JS
+    // DM_STATIC_MF
+    // DM_STATIC_MR
     var _domain = __getConfig('DM_STATIC');
     __doCheckValueWithDefault('DM_STATIC_CS',_domain);
     __doCheckValueWithDefault('DM_STATIC_JS',_domain);
+    __doCheckValueWithDefault('DM_STATIC_MF',_domain);
+    __doCheckValueWithDefault('DM_STATIC_MR','');
     __doCheckDomainConfig('DM_STATIC');
     __doCheckDomainConfig('DM_STATIC_CS');
     __doCheckDomainConfig('DM_STATIC_JS');
+    __doCheckDomainConfig('DM_STATIC_MF');
     var _static = __getConfig('DIR_STATIC')
                    .replace(__getConfig('DIR_WEBROOT'),'/')||'/res/';
     __setConfig('DIR_STATIC_REG',new RegExp(
-               util.format('([\'"])([.\\w/]*?%s[.\\w/]*?)\\1',_static),'g'));
+               util.format('([\'"])([.\\w/@-]*?%s[.\\w/@-]*?)\\1',_static),'g'));
 };
 /*
  * 检查混淆配置
@@ -311,8 +363,12 @@ var __doCheckConfig_OBF = function(){
 var __doCheckConfig_CORE = function(){
     // CORE_LIST_JS
     // CORE_LIST_CS
+    // CORE_MASK_JS
+    // CORE_MASK_CS
     __doCheckInputCoreConfig('CORE_LIST_JS');
     __doCheckInputCoreConfig('CORE_LIST_CS');
+    __doCheckInputCoreConfig('CORE_MASK_JS');
+    __doCheckInputCoreConfig('CORE_MASK_CS');
 };
 /**
  * 解析配置文件

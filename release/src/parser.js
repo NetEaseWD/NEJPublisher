@@ -143,16 +143,22 @@ var __doParseHtml = (function(){
         _reg12 = /<style\b/i,
         _reg13 = /<\/style>/i,
         // script
-        _reg20 = /<script[\w\W]*?src\s*=\s*["'](.*?)["']/i,
+        _reg20 = /<script[^>]*?src\s*=\s*["'](.*?)["']/i,
         _reg21 = /^\s*<script\b/i,
         _reg22 = /<\/script>\s*$/i,
         // template
         _reg30 = /<textarea.*?name\s*=\s*["'](js|css|html)["']/i,
-        _reg31 = /<\/textarea>/i;
-    // check has core 
+        _reg31 = /<\/textarea>/i,
+        // html manifest
+        _reg40 = /^\s*<html(.*?)>\s*$/i;
+    // check core param in define tag
     var _hasCore = function(_txg,_name){
-    	return !_txg.end&&_txg.name==_name&&
-    	      !!_txg.param&&!!_txg.param.core;
+        if (!_txg.end&&_txg.name==_name){
+            var _param = _txg.param||{},
+                _core = _param.core;
+            return _core===!0||_core===!1;
+        }
+    	return !1;
     };
     // check core file inline flag
     var _isInline = function(_txg,_name){
@@ -164,6 +170,7 @@ var __doParseHtml = (function(){
         _log.info('parse %s',_file);
         var _list = _fs.read(_file,
             _config.get('FILE_CHARSET')),
+            _wrot = _config.get('DIR_SOURCE'),
             _rmode = _config.get('X_RELEASE_MODE');
         if (!_list||!_list.length){
             _log.warn('empty file %s',_file);
@@ -180,8 +187,14 @@ var __doParseHtml = (function(){
             _tag    = {},  // tag info  {name:'',param:{},brr:[],type:'',arr:[]}
             _source = [];  // html code list
         if (_config.get('X_NOCOMPRESS')) _tag.brr = [];
-        for(var i=0,l=_list.length,_line,_tmp,_txg;i<l;i++){
+        for(var i=0,l=_list.length,_line,_tmp,_txg,_rot;i<l;i++){
             _line = _list[i];
+            // manifest
+            if (_tag.name=='MANIFEST'&&_reg40.test(_line)){
+                delete _tag.name;
+                delete _tag.param;
+                _line = util.format('<html%s %s>',RegExp.$1,'#<MANIFEST>');
+            }
             // tag line
             if (_reg0.test(_line)&&
                !_reg00.test(_line)&&
@@ -192,11 +205,11 @@ var __doParseHtml = (function(){
                 // <!-- @STYLE {core:true,inline:true} -->
                 // <!-- @DEFINE {core:true,inline:true} -->
                 if (_hasCore(_txg,'STYLE'))
-                    _result.css = !0;
+                    _result.css = _txg.param.core;
                 if (_isInline(_txg,'STYLE'))
                     _result.icss = !0;
                 if (_hasCore(_txg,'DEFINE'))
-                    _result.js = !0;
+                    _result.js = _txg.param.core;
                 if (_isInline(_txg,'DEFINE'))
                     _result.ijs = !0;
                 continue;
@@ -246,6 +259,8 @@ var __doParseHtml = (function(){
                         __doParseHtmlDefine(
     					 _line.join('?'),_conf,_root);
                         continue;
+                    }else{
+                        __doParseHtmlDefine('',_conf,_root);
                     }
                 }
                 __doParseHtmlERS(_result,'pg_js',_line[0]);
@@ -282,7 +297,12 @@ var __doParseHtml = (function(){
                     _tag.arr.push(_line.trim());
                     if (_tag.name=='MODULE'&&_tag.type=='html')
                         _tag.type = 'mdl';
-                    __doParseHtmlTemplate(_tag,_result,_root);
+                    // external template path must in DIR_SOURCE
+                    _rot = _root;
+                    if (_rot.indexOf(_wrot)<0){
+                        _rot = _wrot;
+                    }
+                    __doParseHtmlTemplate(_tag,_result,_rot);
                     continue;
                 }
             }
@@ -325,6 +345,12 @@ var __doParseHtmlTAG = (function(){
         return _result;
     };
     return function(_line,_last,_result){
+        // comment line
+        if (_line.indexOf('@')<0){
+        	_log.info('ignore comment line: %s',_line);
+        	return {};
+        }
+        // tag line
         var _tag  = _tag2obj(_line);
         !_tag.end ? __doParseHtmlTAGStart(_tag,_last,_result)
                   : __doParseHtmlTAGEnd(_tag,_last,_result);
@@ -360,6 +386,7 @@ var __doParseHtmlTAGStart = function(_tag,_last,_result){
         case 'MODULE':
         case 'DEFINE':
         case 'IGNORE':
+        case 'MANIFEST':
             if (!!_last.name){
                 _log.warn('start tag[%s] before end tag[%s],ignore start tag!',_tag.name,_last.name);
             }else{
@@ -368,12 +395,13 @@ var __doParseHtmlTAGStart = function(_tag,_last,_result){
                 if (_tag.name=='DEFINE'){
                 	_list.push('#<PG_JS>');
                 }
-                if (_tag.name=='VERSION')
+                if (_tag.name=='VERSION'){
                     _list.push('#<VERSION>');
+                }
             }
         break;
         default:
-            _log.warn('error named start tag[%s],igonre start tag!',_tag.name);
+            _log.warn('unknown start tag[%s],igonre start tag!',_tag.name);
         break;
     }
 };
@@ -423,7 +451,7 @@ var __doParseHtmlTAGEnd = function(_tag,_last,_result){
             delete _last.param;
         break;
         default:
-            _log.warn('error named end tag[%s],igonre end tag!',_tag.name);
+            _log.warn('unknown end tag[%s],igonre end tag!',_tag.name);
         break;
     }
 };
@@ -535,9 +563,11 @@ var __doParseHtmlDefine = (function(){
     return function(_url,_conf,_root){
         var _arr   = _url.split('?'),
             _query = query.parse(_doMerge(_arr[1])||''),
-            _roots = _platform(_query.p);
+            _roots = _platform(_config.get('NEJ_PLATFORM')||_query.p);
         delete _query.p;
         delete _query.c;
+        var _deps = _query.d;
+        delete _query.d;
         var _cfrot = _conf.root||{};
         // pro/com/...
         for(var x in _query)
@@ -551,6 +581,12 @@ var __doParseHtmlDefine = (function(){
         _cfrot.lib = _config.get('NEJ_DIR')||
                      (path.dirname(_arr[0])+'/');
         _conf.root = _cfrot;
+        // dependency config
+        if (!!_deps){
+            __doParseHtmlDepConf(
+                _doAbsolutePath(_deps,_root),_conf
+            );
+        }
     };
 })();
 /*
@@ -665,6 +701,43 @@ var __doParseHtmlResource = (function(){
     };
 })();
 /**
+ * 解析依赖配置文件
+ * @param  {String} _file 路径
+ * @return {Void}
+ */
+var __doParseHtmlDepConf = (function(){
+    var _xconf;
+    var _doConfig = function(_maps){
+        console.log('deps config map -> %j',_maps);
+        if (!_maps) return;
+        var _deps = _xconf.deps,
+            _root = _xconf.root;
+        for(var x in _maps){
+            console.log('add dep config -> %s:%j',x,_maps[x]);
+            var _file = [x];
+            __doParseJSPatched(_file,_root);
+            _file = _file[0];
+            __doParseJSPatched(_maps[x],_root);
+            _deps[_file] = _maps[x];
+            console.log('add dep config +> %s:%j',_file,_maps[x]);
+        }
+    };
+    var NEJ = {config:_doConfig};
+    return function(_file,_conf){
+        console.log('deps config file -> %s',_file);
+        var _list = _fs.read(
+            _file,_config.get('FILE_CHARSET')
+        );
+        console.log('deps file content -> %j',_list);
+        if (!_list||!_list.length) return;
+        if (!_conf.deps){
+            _conf.deps = {};
+        }
+        _xconf = _conf;
+        eval(_list.join('\n'));
+    };
+})();
+/**
  * 分析需要解析的文件列表
  * @param  {String} _dir    目录
  * @param  {Object} _result 结果集
@@ -681,7 +754,8 @@ var __doListHtmlFile = function(_dir,_result){
             if (!_result.files) _result.files = {};
             if (!_result.manifest) _result.manifest = {};
             for(var i=0,l=_list.length,_file,_data,
-                _reg = _config.get('FILE_SUFFIXE');i<l;i++){
+                _reg = _config.get('FILE_SUFFIXE'),
+                _reg1 = _config.get('FILE_FILTER');i<l;i++){
                 _file = _list[i];
                 if (_util.svn(_file))
                     continue;
@@ -690,7 +764,8 @@ var __doListHtmlFile = function(_dir,_result){
                     __doListHtmlFile(_file+'/',_result);
                     continue;
                 }
-                if (!!_reg&&!_reg.test(_file))
+                if ((!!_reg&&!_reg.test(_file))||
+                    (!!_reg1&&!_reg1.test(_file)))
                     continue;
                 _data = __doParseHtml(_file,_result.conf);
                 if (!!_data){
@@ -711,6 +786,16 @@ var __doListHtmlFile = function(_dir,_result){
  */
 var __doParseJSList = function(_list,_result){
     if (!_result.deps) _result.deps = {};
+    // merge deps config
+    var _xmap = _result.conf.deps;
+    if (!!_xmap){
+        var _deps = _result.deps;
+        for(var x in _xmap){
+            _deps[x] = _xmap[x];
+        }
+        delete _result.conf.deps;
+    }
+    //_log.info('---------------------> %j',_result.deps);
     if (!_result.data) _result.data = {};
     if (!_list||!_list.length) return;
     __doParseJSPatched(_list,_result.conf.root);
@@ -819,7 +904,10 @@ var __doParseJSContent = (function(){
             }
         }
         _result.data[_alias] = _map.code||'';
-        _result.deps[_alias] = _map.deps||[];
+        // deps can from deps config file
+        if (!!_map.deps||!_result.deps[_alias]){
+            _result.deps[_alias] = _map.deps||[];
+        }
         _log.debug('dependency result: %s -> %j',_alias,_map.deps);
         __doParseJSList(_result.deps[_alias],_result);
     };
@@ -854,12 +942,18 @@ var __doParseJSPatched = (function(){
             _istring = !util.isArray(_patched);
         for(var i=_list.length-1,_name;i>=0;i--){
             _name = _list[i];
-            if (!!_native&&_name.indexOf('{native}')>=0)
+            // for source code
+            if (_name.indexOf('{')!=0){
+                continue;
+            }
+            // for path
+            if (!!_native&&_name.indexOf('{native}')>=0){
                 _list[i] = _name.replace('{native}',_native);
+            }
             if (_name.indexOf('{patch}')>=0){
-                if (_istring)
+                if (_istring){
                     _list[i] = _name.replace('{patch}',_patched);
-                else{
+                }else{
                     _name = _name.replace('{patch}','');
                     _name = (_patched.join(_name+',')+_name).split(',');
                     _name.unshift(i,1);
@@ -867,8 +961,15 @@ var __doParseJSPatched = (function(){
                 }
             }
         }
-        for(var i=0,l=_list.length;i<l;i++)
-            _list[i] = _complete(_list[i],_conf);
+        for(var i=0,l=_list.length,_name;i<l;i++){
+            _name = _list[i];
+            // for source code
+            if (_name.indexOf('{')!=0){
+                continue;
+            }
+            // for path
+            _list[i] = _complete(_name,_conf);
+        }
     };
 })();
 /*
@@ -1072,6 +1173,10 @@ var __doDownloadResource = function(_result){
     });
     __doDownloadExternalCS(_result.core.cs,_result);
     __doParseJSList(_result.core.js,_result);
+    __doParseJSPatched(
+        _result.mask.js,
+        _result.conf.root
+    );
 	__doDownloadCheck(_result);
 };
 /*
@@ -1085,11 +1190,13 @@ var __doPrepareCache = (function(){
         if (!!_result.output) return;
         var _core = _result.core;
         _core.js = __doParseJSDependency(_core.js,_result);
-        
-        _result.output = {js:{core:_core.js||[]}
-                         ,css:{core:_core.cs||[]}
-                         ,core:{}};
+        _result.output = {
+            core:{},
+            js:{core:_core.js||[]},
+            css:{core:_core.cs||[]}
+        };
         // build core js/css maps
+        /*
         var _cmap = _result.output.core;
         for(var i=0,l=_list.length,_files;i<l;i++){
             _files = _core[_list[i]];
@@ -1098,6 +1205,7 @@ var __doPrepareCache = (function(){
                 _cmap[_files[j]] = !0;
             }
         }
+        */
         delete _result.core;
     };
 })();
@@ -1108,7 +1216,8 @@ var __doPrepareCache = (function(){
  */
 var __doPrepareCore = (function(){
     var _list = ['js','cs'],
-        _xmxp = {cs:'STYLE',js:'SCRIPT'};
+        _xmxp = {cs:'STYLE',js:'SCRIPT'},
+        _xcfg = {core:'CORE_LIST_',mask:'CORE_MASK_'};
     var _complete = function(_list,_root){
         if (!_list||!_list.length) return;
         for(var i=0,l=_list.length;i<l;i++){
@@ -1117,18 +1226,18 @@ var __doPrepareCore = (function(){
             _list[i] = _doAbsolutePath(_list[i],_root);
         }
     };
-    return function(_result){
-        var _core = _result.core;
+    var _prepare = function(_name,_prefix,_result){
+        var _core = _result[_name];
         if (!_core){
             _core = {};
-            _result.core = _core;
+            _result[_name] = _core;
         }
         for(var i=0,l=_list.length,_file,_cont,_ign;i<l;i++){
             // check ignore core config
             _ign = _config.get('X_NOCORE_'+_xmxp[_list[i]]); 
             if (_ign) continue;
             // core config in release.conf
-            _file = _config.get('CORE_LIST_'
+            _file = _config.get(_prefix
                   + _list[i].toUpperCase());
             if (!_file) continue;
             if (util.isArray(_file)){
@@ -1146,6 +1255,11 @@ var __doPrepareCore = (function(){
         _complete(_core.cs,_root);
         _complete(_core.js,_root);
     };
+    return function(_result){
+        for(var x in _xcfg){
+            _prepare(x,_xcfg[x],_result);
+        }
+    };
 })();
 /*
  * 准备列表
@@ -1157,15 +1271,31 @@ var __doPrepareCore = (function(){
  * @return {Void}
  */
 var __doPrepareList = (function(){
-    var _xmxp = {css:'STYLE',js:'SCRIPT'};
+    var _xmxp = {css:'STYLE',js:'SCRIPT'},
+        _xmsk = {css:'cs',js:'js'};
     var f = function(){
         return !1;
+    };
+    var _split = function(_core,_mask){
+        var _map = {};
+        if (!!_mask&&_mask.length>0){
+            for(var i=0,l=_mask.length;i<l;i++){
+                _map[_mask[i]] = !0;
+            }
+        }
+        _log.info('mask map -> %j',_map);
+        for(var i=_core.length-1;i>=0;i--){
+            if (!!_map[_core[i]]){
+                _core.splice(i,1);
+            }
+        }
     };
     return function(_result,_conf){
         __doPrepareCache(_result);
         var _type = _conf.type,
             _xmap = {},
-            _xlst = _result.output[_type].core,
+            _ocfg = _result.output[_type],
+            _xlst = _ocfg.core,
             _fmap = _result.output.core,
             _iscf = _xlst.length>0||
                     _config.get('X_NOCORE_'+_xmxp[_type]);
@@ -1180,26 +1310,33 @@ var __doPrepareList = (function(){
                 _file = _list[i];
                 _file = (_conf.ffuc||f)(_file,_result)||_file;
                 _list[i] = _file;
-                if (_iscf) continue;
+                if (_iscf||_fobj[_type]===!1) continue;
                 // calculate file count
                 if (!_xmap[_file])
                     _xmap[_file] = 0;
                 _xmap[_file]++;
                 if (_xmap[_file]==2){
                     _xlst.push(_file);
-                    _fmap[_file] = !0;
                 }
             }
         });
+        // mask core file 
+        _split(_xlst,_result.mask[_xmsk[_type]]);
+        for(var i=_xlst.length-1;i>=0;i--){
+            _fmap[_xlst[i]] = !0;
+        }
         _log.info('core %s file list -> %j',_type,_xlst);
+        // split core from page
         var _output = _result.output[_type];
         _doEachResult(_result.files,function(_fobj,_prefix,_name){
             var _list = _fobj[_prefix+_type];
             if (!_list||!_list.length) return;
-            for(var i=_list.length-1;i>=0;i--){
-                if (!!_fmap[_list[i]]){
-                    _fobj[_type] = !0;
-                    _list.splice(i,1);
+            if (_fobj[_type]!==!1){
+                for(var i=_list.length-1;i>=0;i--){
+                    if (!!_fmap[_list[i]]){
+                        _fobj[_type] = !0;
+                        _list.splice(i,1);
+                    }
                 }
             }
             _output[_prefix+_name] = _list;
@@ -1305,15 +1442,18 @@ var __doExlineFile = (function(){
  * @return {String}          样式连接
  */
 var __doInlineFile = (function(){
-    var _reg0 = /<\/(script|textarea)>/gi,
-        _tmap = {cs:['<style type="text/css">%s</style>'
-                    ,'<textarea name="css">%s</textarea>']
-                ,js:['<script type="text/javascript">%s</script>'
-                    ,'<textarea name="js">%s</textarea>']};
+    var _regc = [/<\/(script)>/gi,/<\/(textarea)>/gi],
+        _tmap = {
+            cs:['<style type="text/css">%s</style>',
+                '<textarea name="css">%s</textarea>'],
+            js:['<script type="text/javascript">%s</script>',
+                '<textarea name="js">%s</textarea>']
+        };
     return function(_content,_conf){
-        return util.format(
-              _tmap[_conf.type][_conf.mode],
-              _content.replace(_reg0,'<&#47;$1>'));
+        if (_conf.type=='js'){
+            _content = _content.replace(_regc[_conf.mode],'<&#47;$1>');
+        }
+        return util.format(_tmap[_conf.type][_conf.mode],_content);
     };
 })();
 /*
@@ -1464,7 +1604,7 @@ var __doMergeVersion = function(_result){
             ver:{},
             root:_output.replace(_config.get('DIR_WEBROOT'),'/')
         };
-    var _files = _result.files,_md5,_value,
+    var _files = _result.files,_md5,_value,_source,
         _input = _config.get('DIR_SOURCE'),
         _root  = _result.version.root,
         _cfgroot = _config.get('DM_STATIC_MR'),
@@ -1473,10 +1613,11 @@ var __doMergeVersion = function(_result){
     // for manifest
     for(var x in _files){
         if (x.indexOf(_input)<0) continue;
-        _md5 = _doVersionFile(_files[x].source);
+        _source = _files[x].source;
+        _md5 = _doVersionFile(_source);
         _value = x.replace(_input,'');
         _manifest[_root+_value] = _md5;
-        if (_value.indexOf('#<VERSION>')<0)
+        if (_source.indexOf('#<VERSION>')<0)
             _version[_value] = _md5;
     }
     var _source,_relatived = _config.get('DM_STATIC_RR'),
@@ -1607,14 +1748,31 @@ var __doOutputFile = (function(){
  * @return {Void}
  */
 var __doOutputHtml = function(_result){
-    var _output,
+    var _output,_source,_mfile,
         _files = _result.files,
-        _charset = _config.get('FILE_CHARSET');
+        _charset = _config.get('FILE_CHARSET'),
+        _manifest = _config.get('MANIFEST_OUTPUT'),
+        _root = _config.get('DM_STATIC_MF');
     for(var x in _files){
         _output = _doOutputPath(x);
         _fs.mkdir(path.dirname(_output)+'/');
         _log.info('output %s',_output);
-        _fs.write(_output,_files[x].source,_charset);
+        _source = _files[x].source;
+        if (!!_manifest&&_source.indexOf('#<MANIFEST>')>=0){
+            _mfile = _doRelativePath('MF',_output,_manifest);
+            _source = _source.replace('#<MANIFEST>',' manifest="'+_mfile+'"');
+            // cal manifest entry version
+            if (!_result.manifest_ent){
+                _result.manifest_ent = [];
+            }
+            _result.manifest_ent.push(
+                _result.manifest[
+                    _result.version.root+
+                    x.replace(_config.get('DIR_SOURCE'),'')
+                ]
+            );
+        }
+        _fs.write(_output,_source,_charset);
     }
 };
 /*
@@ -1623,21 +1781,44 @@ var __doOutputHtml = function(_result){
  * @return {Void}
  */
 var __doOutputManifest = (function(){
-    var _template = ['CACHE MANIFEST'
-                    ,'#VERSION = #<VERSION>',''
-                    ,'CACHE:','#<CACHE_LIST>',''
-                    ,'NETWORK:','*',''
-                    ,'FALLBACK:',''].join('\n');
+    var _reg0 = /\.js$/i,
+        _reg1 = /\.css/i,
+        _reg2 = /^\//;
+    var _doCompletePath = function(_file){
+        var _root = '/';
+        // for js
+        if (_reg0.test(_file)){
+            _root = _config.get('DM_STATIC_JS')||_root;
+            return _root+_file.replace(_reg2,'');
+        }
+        // for css
+        if (_reg1.test(_file)){
+            _root = _config.get('DM_STATIC_CS')||_root;
+            return _root+_file.replace(_reg2,'');
+        }
+        // for html
+        return _file;
+    };
     return function(_result){
-        var _file = _config.get('DIR_MANIFEST');
+        var _file = _config.get('MANIFEST_OUTPUT');
         if (!_file) return;
         var _arr = [],_brr = [],
-            _data = _result.manifest;
+            _data = _result.manifest,
+            _reg = _config.get('MANIFEST_FILTER');
+        //_log.info('++++++++> %j',_data);
         for(var x in _data){
-            _arr.push(x);        // url
-            _brr.push(_data[x]); // version
+            // check filter
+            if (!!_reg&&_reg.test(x))
+                continue;
+            _arr.push(_doCompletePath(x)); // url
+            _brr.push(_data[x]);           // version
         }
-        var _content = _template.replace('#<CACHE_LIST>',_arr.join('\n'))
+        if (!!_result.manifest_ent){
+            _brr.push.apply(_brr,_result.manifest_ent);
+        }
+        //console.log('++++++> %j',_brr);
+        var _template = _config.get('MANIFEST_TEMPLATE'),
+            _content = _template.replace('#<CACHE_LIST>',_arr.join('\n'))
                                 .replace('#<VERSION>',_doVersionFile(_brr.sort().join('.')));
         _log.info('output %s',_file);
         _fs.write(_file,_content,_config.get('FILE_CHARSET'));

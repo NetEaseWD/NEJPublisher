@@ -1,0 +1,12 @@
+CACHE MANIFEST
+#VERSION = e82c1be0217ee7a3b63119265f384017
+
+CACHE:
+/r/core.css
+/r/core.js
+/r/pp_simple.js
+
+NETWORK:
+*
+
+FALLBACK:
