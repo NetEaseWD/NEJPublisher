@@ -832,11 +832,20 @@ var __doParseJSContent = (function(){
  */
 var __doParseJSPatched = (function(){
     var _reg = /{(.*?)}/gi,
-	    _reg1 = /([^:])\/+/g;
-    var _complete = function(_file,_conf){
-        return _file.replace(_reg,function($1,$2){
-            return _conf[$2]||$1;
-        }).replace(_reg1,'$1/');
+        _reg1 = /([^:])\/+/g;
+    var _absolute = function(_uri){
+        return (_uri.indexOf('://') > 0 || _uri.indexOf('/' == 0);
+    };
+    var _complete = function(_file,_conf,_root){
+        var _uri = _file.replace(_reg,function($1,$2){
+                       return _conf[$2]||$1;
+                   }).replace(_reg1,'$1/');
+        if(!!_root && _uri.indexOf('./') >=0){
+            if(_absolute(_uri)) return path.normalize(_uri);
+            _root = _root.replace(/[\/][^\/]*\..*/,'/');
+            _uri = path.resolve(_root,_uri);
+        }
+        return _uri;
     };
     return function(_list,_conf){
         if (!_list||!_list.length) return;
