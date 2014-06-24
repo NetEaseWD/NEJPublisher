@@ -922,7 +922,7 @@ var __doParseJSPatched = (function(){
     var _reg = /{(.*?)}/gi,
         _reg1 = /([^:])\/+/g;
     var _absolute = function(_uri){
-        return (_uri.indexOf('://') > 0 || _uri.indexOf('/' == 0);
+        return (_uri.indexOf('://')>0||_uri.indexOf('/'==0));
     };
     var _complete = function(_file,_conf,_root){
         var _uri = _file.replace(_reg,function($1,$2){
