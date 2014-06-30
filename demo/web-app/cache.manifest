@@ -1,10 +1,29 @@
 CACHE MANIFEST
-#VERSION = e82c1be0217ee7a3b63119265f384017
+#VERSION = 039718c52152414d3024cd716eed58a5
 
 CACHE:
-/r/core.css
-/r/core.js
-/r/pp_simple.js
+//b0.bst.126.net/r/core.css
+//b0.bst.126.net/r/core.js
+//b0.bst.126.net/r/pp_simple.js
+/pub/index/a.a0.html
+/pub/index/a.a1.html
+/pub/index/a.a2.html
+/pub/index/a.html
+/pub/index/b.b0.html
+/pub/index/b.b1.html
+/pub/index/b.b2.html
+/pub/index/b.html
+/pub/index/c.html
+/pub/index/d.d0.html
+/pub/index/d.d1.html
+/pub/index/d.d2.html
+/pub/index/d.html
+/pub/index/m.html
+/pub/index/ui.html
+/pub/index.html
+/pub/simple.html
+/pub/test/a.html
+/pub/test/b.html
 
 NETWORK:
 *

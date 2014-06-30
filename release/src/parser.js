@@ -7,7 +7,8 @@ var _fs     = require('./file.js'),
      fs     = require('fs'),
      util   = require('util'),
      path   = require('path'),
-     query  = require('querystring');
+     query  = require('querystring'),
+     NEJ    = {};
 /*
  * 根据配置的字典信息合并数据
  * @param  {String} _text 合并前数据
@@ -38,6 +39,22 @@ var _doAbsolutePath = function(_src,_root){
     if (_src.indexOf('/')==0)
         _root = _config.get('DIR_WEBROOT');
     return _path.url(_src,_root);
+};
+/*
+ * 相对地址转绝对地址
+ * @param  {Array}  相对地址列表
+ * @param  {String} 相对根路径
+ * @return {Void}   绝对路径
+ */
+var _doAbsolutePathList = function(_list,_root){
+    if (!_list||!_list.length) return;
+    for(var i=0,l=_list.length,_it;i<l;i++){
+        _it = _list[i];
+        // relative path start with ./ or ../
+        if (_it.indexOf('.')==0){
+            _list[i] = _doAbsolutePath(_it,_root);
+        }
+    }
 };
 /*
  * 计算静态资源相对路径
@@ -530,18 +547,23 @@ var __doParseHtmlVersion = function(_tag){
  * @return {Void}
  */
 var __doParseHtmlDefine = (function(){
-    var _pmap = {win:'trident-1'},
-        _bmap = {td:['trident-0','trident-1','trident'],
-                'td-0':['trident-1','trident'],
-                'td-1':'trident-1',gk:'gecko',wk:'webkit',pt:'presto'},
-        _reg9 = /(cef|ios|win|android)/;
+    var _reg9 = /(cef|ios|win|android)/,
+        _pmap = {win:'trident-1'},
+        _bmap = {
+            gk:'gecko',wk:'webkit',pt:'presto',
+            td:['trident-1','trident','trident-0'], // for ie6+
+           'td-0':['trident-1','trident'],          // for ie7+
+           'td-1':'trident-1'                       // for ie10+
+        };
     var _platform = function(_config){
         var _root = {};
         if (!_config)
             _config = 'td|gk|wk|pt';
+        _root.platform = _config;
         // hybrid development
         if (_reg9.test(_config)){
             var _name = RegExp.$1;
+            _root.platform = _name=='win'?'td-1':'wk';
             _root['native'] = '{lib}native/'+_name+'/';
             _root['patch']  = '{lib}patched/'+(_pmap[_name]||'webkit')+'/';
             return _root;
@@ -575,6 +597,8 @@ var __doParseHtmlDefine = (function(){
         if (!_cfrot.pro)
             _cfrot.pro = _doAbsolutePath('../javascript/',_root);
         // patch/native
+        _conf.platform = _roots.platform;
+        delete _roots.platform;
         for(var x in _roots)
             _cfrot[x] = _roots[x];
         // lib
@@ -707,28 +731,29 @@ var __doParseHtmlResource = (function(){
  */
 var __doParseHtmlDepConf = (function(){
     var _xconf;
-    var _doConfig = function(_maps){
-        console.log('deps config map -> %j',_maps);
+    NEJ.config = function(_maps){
+        //console.log('deps config map -> %j',_maps);
         if (!_maps) return;
         var _deps = _xconf.deps,
             _root = _xconf.root;
         for(var x in _maps){
-            console.log('add dep config -> %s:%j',x,_maps[x]);
+            //console.log('add dep config -> %s:%j',x,_maps[x]);
             var _file = [x];
+            // complete file uri
             __doParseJSPatched(_file,_root);
             _file = _file[0];
+            // complete all dep files uri
             __doParseJSPatched(_maps[x],_root);
             _deps[_file] = _maps[x];
-            console.log('add dep config +> %s:%j',_file,_maps[x]);
+            //console.log('add dep config +> %s:%j',_file,_maps[x]);
         }
     };
-    var NEJ = {config:_doConfig};
     return function(_file,_conf){
-        console.log('deps config file -> %s',_file);
+        //console.log('deps config file -> %s',_file);
         var _list = _fs.read(
             _file,_config.get('FILE_CHARSET')
         );
-        console.log('deps file content -> %j',_list);
+        //console.log('deps file content -> %j',_list);
         if (!_list||!_list.length) return;
         if (!_conf.deps){
             _conf.deps = {};
@@ -782,42 +807,55 @@ var __doListHtmlFile = function(_dir,_result){
  * 解析脚本列表
  * @param  {Array}  _list   脚本列表
  * @param  {Object} _result 结果集
+ * @param  {String} _owner  列表所在文件
  * @return {Void}
  */
-var __doParseJSList = function(_list,_result){
-    if (!_result.deps) _result.deps = {};
-    // merge deps config
-    var _xmap = _result.conf.deps;
-    if (!!_xmap){
-        var _deps = _result.deps;
-        for(var x in _xmap){
-            _deps[x] = _xmap[x];
+var __doParseJSList = (function(){
+    var _reg0 = /\.js$/i,
+        _reg1 = /[\n\r]/g;
+    return function(_list,_result,_owner){
+        if (!_result.deps) _result.deps = {};
+        // merge deps config
+        var _xmap = _result.conf.deps;
+        if (!!_xmap){
+            var _deps = _result.deps;
+            for(var x in _xmap){
+                _deps[x] = _xmap[x];
+            }
+            delete _result.conf.deps;
         }
-        delete _result.conf.deps;
-    }
-    //_log.info('---------------------> %j',_result.deps);
-    if (!_result.data) _result.data = {};
-    if (!_list||!_list.length) return;
-    __doParseJSPatched(_list,_result.conf.root);
-    for(var i=0,l=_list.length,_file;i<l;i++){
-        _file = _list[i];
-        if (!!_result.data[_file])
-            continue;
-        if (_path.remote(_file)){
-            __doDownloadExternalJS(_file,_result);
-            continue;
+        //_log.info('---------------------> %j',_result.deps);
+        if (!_result.data) _result.data = {};
+        if (!_result.owner) _result.owner = {};
+        if (!_list||!_list.length) return;
+        __doParseJSPatched(_list,_result.conf.root);
+        for(var i=0,l=_list.length,_file;i<l;i++){
+            _file = _list[i];
+            // has content
+            if (!!_result.data[_file])
+                continue;
+            // need download
+            if (_path.remote(_file)){
+                __doDownloadExternalJS(_file,_result);
+                continue;
+            }
+            // as source code
+            if (!_path.exist(_file)){
+                if (_reg0.test(_file)){
+                    _log.error('js file not exist -> %s',_file);
+                }else{
+                    var _text = _file.substr(0,100).replace(_reg1,' ');
+                    _log.warn('see uri as js source code -> %s ...',_text);
+                }
+                _list[i] = 'js-code-'+(_result.rmap.seed++);
+                _result.owner[_list[i]] = _owner;
+                __doParseJSContent(_list[i],_file.split('\n'),_result);
+                continue;
+            }
+            __doParseJSFile(_file,_file,_result);
         }
-        if (!_path.exist(_file)){
-            // see as code
-            _log.warn('js file not exist -> %s',_file);
-            _list[i] = 'js-code-'+(_result.rmap.seed++);
-            __doParseJSContent(_list[i],
-             _file.split('\n'),_result);
-            continue;
-        }
-        __doParseJSFile(_file,_file,_result);
-    }
-};
+    };
+})();
 /*
  * 解析脚本文件
  * @param  {String} _alias  文件别名
@@ -850,31 +888,178 @@ var __doParseJSFile = function(_alias,_file,_result){
 var __doParseJSContent = (function(){
     var f,
         _reg1 = /^\s*(NEJ\.)?define\(/,
-        _reg2 = /;$/i;
-    var _doDefine = function(_uri,_deps,_callback){
+        _reg2 = /;$/i,
+        _reg3 = /\s/g,
+        _reg4 = /(TR|WR|GR|TV|WV|GV)/i,
+        _reg5 = /([<>=]=?)/,
+        _reg6 = /td\-([01])/,
+        _reg7 = /([\w-\.]+)[\>=](=?)[TWG]/i,
+        _reg8 = /[TWG][RV][\<=](=?)([\w-\.]+)/i,
+        _vark = '_auto_var_',
+        _pmap = {T:'trident',W:'webkit',G:'gecko'},
+        _vmap = {R:'release',V:'version'},
+        _emap = {T:'td',W:'wk',G:'gk'},
+        _rmap = {0:'3.0',1:'6.0'};
+    // format arguments
+    var _doFormatArgs = function(_uri,_deps,_callback){
+        var _args = [null,null,null],
+            _kfun = [
+                function(_arg){return typeof(_arg)=='string';},
+                util.isArray,
+                _util.func
+            ];
+        for(var i=0,l=arguments.length,_it;i<l;i++){
+            _it = arguments[i];
+            for(var j=0,k=_kfun.length;j<k;j++){
+                if (_kfun[j](_it)){
+                    _args[j] = _it;
+                    break;
+                }
+            }
+        }
+        return _args;
+    };
+    // parse max value for expression
+    var _doParseExpMax = function(_exp){
+        var _arr = [];
+        // left
+        if (_reg7.test(_exp)){
+            _arr.push({
+                v:RegExp.$1,
+                e:RegExp.$2=='='
+            });
+        }
+        // right
+        if (_reg8.test(_exp)){
+            _arr.push({
+                v:RegExp.$2,
+                e:RegExp.$1=='='
+            });
+        }
+        // cal max value
+        return _arr.sort(
+            function(_left,_right){
+                return _left.v>=_right.v?1:-1;
+            }
+        ).pop()||{v:'a'};
+    };
+    // parse platform expression
+    var _isExpForPlatform = function(_exp,_platform){
+        _log.info('compare platform %s with expression %s',_platform,_exp);
+        // check expression
+        if (!_reg4.test(_exp)){
+            return !1;
+        }
+        // check platform
+        var _key = _emap[RegExp.$1.split('')[0]];
+        if (!_key||_platform.indexOf(_key)<0){
+            return !1;
+        }
+        // not check version for no-trident or all trident
+        if (_key!='td'||!_reg6.test(_platform)){
+            return !0;
+        }
+        // check version  for trident
+        // td-0 -> TR>=3.0 (ie>=7)
+        // td-1 -> TR>=6.0 (ie>=10)
+        var _min = _rmap[RegExp.$1],
+            _res = _doParseExpMax(_exp);
+        _log.info('compare %s with %j',_min,_res);
+        return _res.v>_min||(_res.e&&_res.v==_min);
+    };
+    // parse expression to if condition
+    var _doParseExp2Cond = function(_exp){
+        _exp = (_exp||'').replace(_reg3,'');
+        if (!_reg4.test(_exp)){
+            return 'false';
+        }
+        // parse platform
+        var _result = [], 
+            _name = RegExp.$1,
+            _arr = _name.split('');
+        // check platform code
+        _result.push(util.format(
+            "%s.engine=='%s'",
+            _vark,_pmap[_arr[0]]
+        ));
+        // check version code
+        var _ver = _vark+'.'+_vmap[_arr[1]],
+            _brr = _exp.split(_name),_tmp;
+        // left
+        _tmp = _brr[0];
+        if (!!_tmp){
+            // 6<=  ->  '6'<=xxx.xxx
+            _result.push("'"+_tmp.replace(_reg5,"'$1")+_ver);
+        }
+        // right
+        _tmp = _brr[1];
+        if (!!_tmp){
+            // <=6  ->  xxx.xxx<='6'
+            _result.push(_ver+_tmp.replace(_reg5,"$1'")+"'");
+        }
+        return _result.join('&&');
+    };
+    // parse nej patch
+    var _doParseNEJPatchCode = function(_map,_owner,_platform){
+        var _code = _map.code||'';
+        if (_code.indexOf('NEJ.patch')<0) return;
+        var _arr = [], // code
+            _brr = []; // deps
+        NEJ.patch = function(_exp,_deps,_callback){
+            var _args = _doFormatArgs.apply(null,arguments);
+            if (!_args[0]) return;
+            // parse platform and version expression
+            if (!_isExpForPlatform(_args[0],_platform)){
+                _log.info('%s not match %s',_args[0],_platform);
+                return;
+            }
+            // merge deps
+            var _deps = _args[1];
+            if (!!_deps){
+                _doAbsolutePathList(_deps,_owner);
+                _brr.push.apply(_brr,_deps);
+                _log.info('fetch dependences from NEJ.patch -> %j',_deps);
+            }
+            // merge patch function code
+            if (!!_args[2]){
+                var _cond = _doParseExp2Cond(_args[0]);
+                _log.info('%s -> %s',_args[0],_cond);
+                _arr.push(
+                    util.format(
+                        'if (%s){(%s)();}',
+                        _cond,_args[2].toString()
+                    )
+                );
+            }
+        };
+        try{eval(_code);}catch(e){}
+        // update patch file content
+        var _code = '';
+        if (_arr.length>0){
+            _code = util.format(
+                "(function(){var %s = NEJ.P('nej.p')._$KERNEL;\n%s})();",
+                _vark,_arr.join('\n')
+            );
+        }
+        _map.code = _code;
+        if (_brr.length>0){
+            _map.deps = _map.deps||[];
+            _map.deps.push.apply(_map.deps,_brr);
+        }
+    };
+    NEJ.define = function(_uri,_deps,_callback){
         // define('',[],f);
         // define('',f);
         // define([],f);
         // define(f);
-        if (_util.func(_deps)){
-            _callback = _deps;
-            _deps = null;
-        }
-        if (util.isArray(_uri)){
-            _deps = _uri;
-            _uri = '';
-        }
-        if (_util.func(_uri)){
-            _callback = _uri;
-            _deps = null;
-            _uri = '';
-        }
+        var _args = _doFormatArgs.apply(null,arguments);
         return {
-            deps:_deps,
-            code:util.format('(%s)();',(_callback||'').toString())
+            deps:_args[1],
+            code:util.format('(%s)();',(_args[2]||'').toString())
         };
     };
     return function(_alias,_list,_result){
+        //_log.info('========> %s',_alias);
         _list = _list||[];
         // parse js file content
         var _find = !1,
@@ -882,7 +1067,8 @@ var __doParseJSContent = (function(){
         for(var i=0,l=_list.length,_line;i<l;i++){
             _line = (_list[i]||'').trim();
             if (_util.blank(_line)) continue;
-            // define statement   define('',[],f)
+            // define statement
+            // define('',[],f) or NEJ.define('',[],f)
             if (_reg1.test(_line)){
                 if (_find)
                     _log.warn('duplicated define in %s',_alias);
@@ -893,8 +1079,7 @@ var __doParseJSContent = (function(){
         var _map = {code:_source.join('\n')};
         if (_find){
             try{
-                var define = _doDefine,
-                    NEJ = {define:_doDefine},
+                var define = NEJ.define,
                     _umap = eval(_map.code);
                 _map = _umap||_map;
             }catch(e){
@@ -903,37 +1088,78 @@ var __doParseJSContent = (function(){
                 _log.warn('3rd lib with define -> %s',_alias);
             }
         }
-        _result.data[_alias] = _map.code||'';
+        // check NEJ.patch
+        var _owner = path.dirname(_result.owner[_alias]||_alias)+'/';
+        _doParseNEJPatchCode(_map,_owner,_result.conf.platform);
+        _result.data[_alias] = _map.code;
         // deps can from deps config file
         if (!!_map.deps||!_result.deps[_alias]){
             _result.deps[_alias] = _map.deps||[];
         }
+        // complete {platform} and relative path
+        var _deps = _result.deps[_alias];
+        __doParseJSPlatform(_deps,_owner);
         _log.debug('dependency result: %s -> %j',_alias,_map.deps);
-        __doParseJSList(_result.deps[_alias],_result);
+        __doParseJSList(_deps,_result,_alias);
+    };
+})();
+/*
+ * 解析平台适配
+ * @param  {Array}  依赖列表
+ * @param  {String} 列表所在文件
+ * @return {Void}
+ */
+var __doParseJSPlatform = (function(){
+    var _reg0 = /\\|\//;
+    // {platform}xxx -> ['./platform/xxx','./platform/xxx.patch']
+    // {platform}xxx.yy -> ['./platform/xxx.yy','./platform/xxx.patch.yy']
+    var _doParsePlatformURI = function(_uri,_root){
+        _uri = (_uri||'').replace(
+            '{platform}','./platform/'
+        );
+        var _arr = _uri.split(_reg0),
+            _name = _arr.pop(),
+            _rdir = _doAbsolutePath(_arr.join('/')+'/',_root),
+            _result = [_rdir+_name];
+            _patch = _name.split('.'),
+            _sufix = '';
+        if (_patch.length>1){
+            _sufix = '.'+_patch.pop();
+        }
+        // parse patch file
+        var _file = _rdir+_patch.join('.')+'.patch'+_sufix;
+        if (_path.exist(_file)){
+            _result.push(_file);
+        }
+        return _result;
+    };
+    return function(_deps,_root){
+        if (!_deps||!_deps.length) return;
+        // complete platform
+        for(var i=0,_it;_it=_deps[i];i++){
+            if (_it.indexOf('{platform}')>=0){
+                _it = _doParsePlatformURI(_it,_root);
+                _it.unshift(i,1);
+                _deps.splice.apply(_deps,_it);
+            }
+        }
+        // complete relative uri
+        _doAbsolutePathList(_deps,_root);
     };
 })();
 /*
  * 解析脚本补丁信息
- * @param  {Array}  _list 脚本列表
- * @param  {Object} _conf 路径配置信息
+ * @param  {Array}  _list  脚本列表
+ * @param  {Object} _conf  路径配置信息
  * @return {Void}
  */
 var __doParseJSPatched = (function(){
     var _reg = /{(.*?)}/gi,
         _reg1 = /([^:])\/+/g;
-    var _absolute = function(_uri){
-        return (_uri.indexOf('://')>0||_uri.indexOf('/'==0));
-    };
-    var _complete = function(_file,_conf,_root){
-        var _uri = _file.replace(_reg,function($1,$2){
-                       return _conf[$2]||$1;
-                   }).replace(_reg1,'$1/');
-        if(!!_root && _uri.indexOf('./') >=0){
-            if(_absolute(_uri)) return path.normalize(_uri);
-            _root = _root.replace(/[\/][^\/]*\..*/,'/');
-            _uri = path.resolve(_root,_uri);
-        }
-        return _uri;
+    var _complete = function(_file,_conf){
+        return _file.replace(_reg,function($1,$2){
+            return _conf[$2]||$1;
+        }).replace(_reg1,'$1/');
     };
     return function(_list,_conf){
         if (!_list||!_list.length) return;
@@ -963,6 +1189,7 @@ var __doParseJSPatched = (function(){
         }
         for(var i=0,l=_list.length,_name;i<l;i++){
             _name = _list[i];
+            //_log.info('++++++++> %s',_name);
             // for source code
             if (_name.indexOf('{')!=0){
                 continue;
@@ -1005,24 +1232,33 @@ var __doParseJSDependency = (function(){
  * @param  {Object} _result 结果集
  * @return {Void}
  */
-var __doParseCSFile = function(_file,_result){
-    if (!!_result.data[_file]) 
-        return _file;
-    var _list,
-        _return = _file,
-        _rmap = _result.rmap;
-    if (!_rmap[_file]&&
-        !_path.exist(_file)){
-        _log.warn('css file not exist -> %s',_file);
-        _return = 'cs-code-'+(_rmap.seed++);
-        _list = _file.split('\n');
-    }else{
-        _file = _rmap[_file]||_file;
-        _list = _fs.read(_file,_config.get('FILE_CHARSET'));
-    }
-    __doParseCSContent(_return,_list,_result);
-    return _return;
-};
+var __doParseCSFile = (function(){
+    var _reg0 = /\.css$/i,
+        _reg1 = /[\n\r]/g;
+    return function(_file,_result){
+        if (!!_result.data[_file]) 
+            return _file;
+        var _list,
+            _return = _file,
+            _rmap = _result.rmap;
+        if (!_rmap[_file]&&
+            !_path.exist(_file)){
+            if (_reg0.test(_file)){
+                _log.error('css file not exist -> %s',_file);
+            }else{
+                var _text = _file.substr(0,50).replace(_reg1,' ');
+                _log.warn('see uri as css source code -> %s ...',_text);
+            }
+            _return = 'cs-code-'+(_rmap.seed++);
+            _list = _file.split('\n');
+        }else{
+            _file = _rmap[_file]||_file;
+            _list = _fs.read(_file,_config.get('FILE_CHARSET'));
+        }
+        __doParseCSContent(_return,_list,_result);
+        return _return;
+    };
+})();
 /*
  * 解析样式文件内容
  * @param  {String} _file   文件名
@@ -1165,11 +1401,11 @@ var __doDownloadResource = function(_result){
     if (!_result.rmap)
          _result.rmap = {seed:+new Date};
     __doPrepareCore(_result);
-    _doEachResult(_result.files,function(_fobj,_prefix){
+    _doEachResult(_result.files,function(_fobj,_prefix,_file){
         // download css
         __doDownloadExternalCS(_fobj[_prefix+'css'],_result);
         // parse and download javascript
-        __doParseJSList(_fobj[_prefix+'js'],_result);
+        __doParseJSList(_fobj[_prefix+'js'],_result,_file);
     });
     __doDownloadExternalCS(_result.core.cs,_result);
     __doParseJSList(_result.core.js,_result);

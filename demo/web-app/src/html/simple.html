@@ -31,5 +31,15 @@
     <!-- @DEFINE {core:false} -->
     <script src="http://192.168.146.236:8020/NEJ/src/define.js"></script>
     <script src="../javascript/page/simple.js"></script>
+    <script>
+        NEJ.define(['{lib}base/util.js'],function(){
+            console.log('ok');
+        });
+    </script>
+    <script>
+        NEJ.define(['{pro}widget/w1/w1.js'],function(){
+            console.log('ok');
+        });
+    </script>
   </body>
 </html>
